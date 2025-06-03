@@ -134,8 +134,8 @@ export default function AddStudent() {
          transition={{ duration: 0.6 }}
          className="bg-white rounded-2xl shadow-xl overflow-hidden"
        >
-         <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
-           <h2 className="text-2xl font-semibold text-white">Tambah Siswa Baru</h2>
+         <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4">
+           <center><h2 className="text-xl font-semibold text-white">Tambah Siswa Baru</h2></center>
            {/*<p className="text-blue-100 mt-2">Lengkapi data dengan benar</p>*/}
          </div>
          <form onSubmit={handleSubmit} className="p-5">
@@ -262,14 +262,9 @@ export default function AddStudent() {
              {/* Nomor Telepon Orang Tua */}
              <div>
                <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700 mb-2">
-                 ID Telegram Orang Tua - 
-                 <Link
+                 ID Telegram Orang Tua - <Link
            href="/dashboard/students/qr/instructions"
-                 className="text-sm text-blue-600 font-bold hover:underline"
-                 > 
-            Panduan
-         </Link>
-                
+                 className="text-sm text-blue-600 font-bold hover:underline"> (Panduan)</Link>
                </label>
                <input
                  type="tel"
