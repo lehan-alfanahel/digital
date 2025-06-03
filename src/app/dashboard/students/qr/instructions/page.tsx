@@ -12,7 +12,7 @@ export default function QRInstructionsPage() {
           <ArrowLeft size={20} />
         </Link>
         <QrCode className="h-7 w-7 text-primary mr-3" />
-        <h1 className="text-2xl font-bold text-gray-800">Panduan QR Code</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Panduan ID Telegram</h1>
       </div>
       
       <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
@@ -20,77 +20,11 @@ export default function QRInstructionsPage() {
           <div className="bg-blue-100 p-2 rounded-lg mr-3">
             <Info className="h-5 w-5 text-blue-600" />
           </div>
-          <h2 className="text-lg font-semibold">Cara Membuat QR Code untuk Sistem Absensi</h2>
+          <h2 className="text-lg font-semibold">Cara Melihat ID Telegram Kita</h2>
         </div>
         
         <div className="prose max-w-full">
-          <p className="text-gray-700">
-            QR Code yang digunakan dalam sistem absensi ini berisi NISN (Nomor Induk Siswa Nasional)
-            yang berfungsi sebagai ID unik untuk mengidentifikasi siswa pada saat melakukan absensi.
-          </p>
           
-          <h3 className="text-lg font-medium mt-6 mb-3">Langkah-langkah membuat QR Code:</h3>
-          
-          <ol className="space-y-4 list-decimal list-inside">
-            <li className="text-gray-700">
-              <span className="font-medium">Kunjungi situs pembuat QR Code</span>
-              <p className="mt-1 ml-6">
-                Buka situs <a href="https://qrcode.tec-it.com/en" target="_blank" rel="noopener noreferrer" className="text-blue-600 flex items-center">
-                  QR Code Generator
-                  <ExternalLink className="h-3 w-3 ml-1 inline-block" />
-                </a>
-              </p>
-            </li>
-            
-            <li className="text-gray-700">
-              <span className="font-medium">Masukkan NISN siswa di kolom "Your Data"</span>
-              <p className="mt-1 ml-6">
-                Pada halaman utama, masukkan NISN siswa di kolom input "Your Data" untuk membuat QR Code.
-              </p>
-            </li>
-            
-            <li className="text-gray-700">
-              <span className="font-medium">Masukkan NISN siswa</span>
-              <p className="mt-1 ml-6">
-                Masukkan NISN siswa tanpa spasi atau karakter khusus lainnya. Contoh: "0012345678"
-              </p>
-            </li>
-            
-            <li className="text-gray-700">
-              <span className="font-medium">Sesuaikan pengaturan QR Code (opsional)</span>
-              <p className="mt-1 ml-6">
-                Anda dapat menyesuaikan ukuran, warna, dan koreksi kesalahan QR Code di bagian "QR Code Settings". 
-                Disarankan menggunakan Error Correction Level "H" untuk ketahanan QR Code yang lebih baik.
-              </p>
-            </li>
-            
-            <li className="text-gray-700">
-              <span className="font-medium">Unduh QR Code</span>
-              <p className="mt-1 ml-6">
-                Setelah QR Code dibuat, klik tombol "Download" dan pilih format gambar yang diinginkan (PNG atau SVG direkomendasikan untuk kualitas terbaik).
-              </p>
-            </li>
-            
-            <li className="text-gray-700">
-              <span className="font-medium">Cetak QR Code</span>
-              <p className="mt-1 ml-6">
-                Cetak QR Code dan tempelkan pada kartu identitas siswa atau buku siswa.
-              </p>
-            </li>
-          </ol>
-          
-          <div className="bg-yellow-50 p-4 rounded-lg mt-6 border border-yellow-200">
-            <h4 className="text-yellow-800 font-medium mb-2">Penting!</h4>
-            <p className="text-yellow-700 text-sm">
-              Pastikan QR Code dapat dipindai dengan jelas. Untuk hasil terbaik:
-            </p>
-            <ul className="text-yellow-700 text-sm mt-2 list-disc list-inside">
-              <li>Cetak dengan kualitas tinggi</li>
-              <li>Hindari menempatkan QR Code pada permukaan yang mengkilap</li>
-              <li>Pastikan ukuran QR Code minimal 2x2 cm</li>
-              <li>Jangan menekuk atau melipat bagian kertas yang berisi QR Code</li>
-            </ul>
-          </div>
           
           <h3 className="text-lg font-medium mt-6 mb-3">Integrasi dengan Telegram:</h3>
           <p className="text-gray-700">
