@@ -150,28 +150,33 @@ export default function ClassesPage() {
          <BookOpen className="h-7 w-7 text-blue-600 mr-3" />
          <div>
            <h1 className="text-2xl font-bold text-gray-800">Manajemen Kelas</h1>
-           <p className="text-gray-600 text-sm">Kelola data kelas dan wali kelas</p>
+           
          </div>
        </div>
 
        <div className="flex flex-col sm:flex-row gap-2">
-         <button
-           onClick={() => setShowImportModal(true)}
-           className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors shadow-sm"
-         >
-           <Upload size={18} />
-           Import Excel
-         </button>
-
+         
          {userRole === 'admin' && (
            <Link
              href="/dashboard/classes/add"
              className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
            >
              <Plus size={18} />
-             Tambah Kelas
+             Tambah Data Kelas
            </Link>
          )}
+
+
+          <button
+           onClick={() => setShowImportModal(true)}
+           className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+         >
+           <Upload size={18} />
+           Import Dengan Excel
+         </button>
+
+
+        
        </div>
      </div>
      {/* Search */}
@@ -189,7 +194,7 @@ export default function ClassesPage() {
      </div>
      {/* Statistics Cards */}
      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-       <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+       <div className="bg-[#F72585] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
              <p className="text-blue-100 text-sm font-medium">Total Kelas</p>
@@ -199,7 +204,7 @@ export default function ClassesPage() {
          </div>
        </div>
 
-       <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white">
+       <div className="bg-[#7B2CBF] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
              <p className="text-green-100 text-sm font-medium">Total Siswa</p>
@@ -211,7 +216,7 @@ export default function ClassesPage() {
          </div>
        </div>
 
-       <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-6 text-white">
+       <div className="bg-[#F77F00] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
              <p className="text-purple-100 text-sm font-medium">Rata-rata per Kelas</p>
