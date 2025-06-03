@@ -113,7 +113,7 @@ export default function AddStudent() {
    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 pb-24 md:pb-6">
      <div className="w-full max-w-4xl mx-auto px-1 sm:px-6 md:px-8">
        {/* Header */}
-       <div className="flex items-center mb-8 pt-6">
+       <div className="flex items-center mb-4 pt-2">
          <Link
            href="/dashboard/students"
            className="p-2 mr-3 hover:bg-white hover:shadow-md rounded-full transition-all duration-200"
@@ -121,10 +121,10 @@ export default function AddStudent() {
            <ArrowLeft size={20} className="text-gray-600" />
          </Link>
          <div className="flex items-center">
-           <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-xl mr-4">
+           {/*<div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-xl mr-4">
              <User className="h-6 w-6 text-white" />
-           </div>
-           <h1 className="text-2xl font-bold text-gray-800">Tambah Data</h1>
+           </div>*/}
+           <h1 className="text-2xl font-bold text-gray-800">Tambah Data Siswa</h1>
          </div>
        </div>
        {/* Form */}
@@ -262,7 +262,7 @@ export default function AddStudent() {
              {/* Nomor Telepon Orang Tua */}
              <div>
                <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700 mb-2">
-                 Nomor ID Telegram Orang Tua
+                 ID Telegram Orang Tua (Panduan)
                </label>
                <input
                  type="tel"
