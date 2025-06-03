@@ -87,8 +87,9 @@ export default function QRInstructionsPage() {
           Kembali ke Tambah Data Siswa
         </Link>
       </div>
+	    <hr className="border-t border-none mb-5" />
     </div>
-	<hr className="border-t border-none mb-5" />
-	<hr className="border-t border-none mb-5" />
+	
+	
   );
 }
