@@ -111,7 +111,7 @@ export default function AddStudent() {
  };
  return (
    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 pb-24 md:pb-6">
-     <div className="w-full max-w-4xl mx-auto px-2 sm:px-6 md:px-8">
+     <div className="w-full max-w-4xl mx-auto px-1 sm:px-6 md:px-8">
        {/* Header */}
        <div className="flex items-center mb-8 pt-6">
          <Link
@@ -138,7 +138,7 @@ export default function AddStudent() {
            <h2 className="text-2xl font-semibold text-white">Tambah Siswa Baru</h2>
            {/*<p className="text-blue-100 mt-2">Lengkapi data dengan benar</p>*/}
          </div>
-         <form onSubmit={handleSubmit} className="p-8">
+         <form onSubmit={handleSubmit} className="p-6">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {/* Nama Lengkap */}
              <div className="md:col-span-2">
