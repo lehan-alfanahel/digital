@@ -196,7 +196,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                  </div>
                </div>
                {/* Upload Section */}
-               <div className="space-y-2">
+               <div className="space-y-2 mt-4">
                  <h3 className="text-lg font-semibold text-gray-800">
                    Langkah 2 : Upload File Excel
                  </h3>
@@ -228,7 +228,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
 
                      <div>
                        <p className="text-lg font-medium text-gray-700 mb-2">
-                         Drag & Drop file Excel di sini
+                         Seret file Excel di sini
                        </p>
                        <p className="text-gray-500 text-sm mb-4">atau</p>
                        <label
@@ -241,7 +241,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                      </div>
 
                      <p className="text-xs text-gray-500">
-                       Hanya menerima file .xlsx dengan maksimal 100 kelas
+                       Hanya menerima file .xlsx maksimal 100 kelas
                      </p>
                    </div>
                  </div>
@@ -324,7 +324,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
            )}
          </div>
          {/* Footer */}
-         <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
+         <div className="bg-gray-50 px-6 py-2 flex justify-end space-x-3">
            <button
              onClick={handleClose}
              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
