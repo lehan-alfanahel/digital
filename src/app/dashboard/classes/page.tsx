@@ -277,7 +277,7 @@ export default function ClassesPage() {
              </div>
              <div className="space-y-3">
                <div className="flex items-center space-x-2">
-                 <User className="h-4 w-4 text-gray-400" />
+                {/*<User className="h-4 w-4 text-gray-400" />*/}
                  <span className="text-sm text-gray-600">
                    Wali Kelas : {classItem.teacherName || 'Belum ditentukan'}
                  </span>
@@ -290,14 +290,7 @@ export default function ClassesPage() {
                  </span>
                </div>
              </div>
-             <div className="mt-4 pt-4 border-t border-gray-100">
-              {/*<Link
-                 href={`/dashboard/students?class=${encodeURIComponent(classItem.name)}`}
-                 className="text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline"
-               >
-                 Lihat daftar siswa →
-               </Link>*/}
-             </div>
+            
            </motion.div>
         
          ))}
