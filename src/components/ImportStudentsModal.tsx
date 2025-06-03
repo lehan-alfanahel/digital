@@ -213,8 +213,7 @@ export default function ImportStudentsModal({
                      <li>• Kolom D : Jenis Kelamin</li>
                      <li>• Kolom E : Tanggal Lahir</li>
                      <li>• Kolom F : Nama Orang Tua/Wali</li>
-                     <li>• Kolom G : ID Telegram Orang Tua  - <Link href="/dashboard/students/qr/instructions"
-                      className="text-sm text-blue-600 font-bold hover:underline"> (Panduan)</Link></li>
+                     <li>• Kolom G : ID Telegram Orang Tua </li>
                      <li>• Kolom H : Alamat Siswa</li>
                    </ul>
                  </div>
