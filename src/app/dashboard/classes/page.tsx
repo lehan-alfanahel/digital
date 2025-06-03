@@ -247,9 +247,9 @@ export default function ClassesPage() {
            >
              <div className="flex items-start justify-between mb-4">
                <div className="flex items-center space-x-3">
-                 <div className="bg-blue-100 p-3 rounded-lg">
+                {/*<div className="bg-blue-100 p-3 rounded-lg">
                    <BookOpen className="h-6 w-6 text-blue-600" />
-                 </div>
+                 </div>*/}
                  <div>
                    <h3 className="text-lg font-semibold text-gray-800">
                      Kelas {classItem.name}
@@ -277,7 +277,7 @@ export default function ClassesPage() {
              </div>
              <div className="space-y-3">
                <div className="flex items-center space-x-2">
-                {/*<User className="h-4 w-4 text-gray-400" />*/}
+                <User className="h-4 w-4 text-gray-400" />
                  <span className="text-sm text-gray-600">
                    Wali Kelas : {classItem.teacherName || 'Belum ditentukan'}
                  </span>
