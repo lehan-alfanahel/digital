@@ -161,7 +161,7 @@ export default function ImportStudentsModal({
                <h3 className="font-semibold text-blue-800 mb-2">Langkah 1 : Download Template</h3>
                <p className="text-blue-700 text-sm mb-3">
                  Download template Excel terlebih dahulu, isi dengan data siswa, lalu upload kembali.
-                <Link a href="/dashboard/students/qr/instructions"
+                <Link href="/dashboard/students/qr/instructions"
                  className="text-sm text-blue-600 font-bold hover:underline"> (Panduan Melihat ID Telegram)</Link>
                </p>
                <button
