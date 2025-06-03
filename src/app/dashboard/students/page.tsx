@@ -140,7 +140,7 @@ export default function Students() {
              className="w-full flex items-center justify-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-lg hover:bg-green-700 active:bg-green-800 transition-colors"
            >
              <FileSpreadsheet size={16} />
-             Import Excel
+             Import Dengan Excel
            </button>
          </div>
        )}
