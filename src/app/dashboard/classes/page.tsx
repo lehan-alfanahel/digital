@@ -243,7 +243,7 @@ export default function ClassesPage() {
              key={classItem.id}
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-200"
+             className="bg-gradient-to-r from-yellow-50 to-amber-100 rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-200"
            >
              <div className="flex items-start justify-between mb-4">
                <div className="flex items-center space-x-3">
@@ -262,13 +262,13 @@ export default function ClassesPage() {
                  <div className="flex space-x-1">
                    <Link
                      href={`/dashboard/classes/edit/${classItem.id}`}
-                     className="p-2 text-white hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                     className="p-2 text-blue-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                    >
                      <Edit size={16} />
                    </Link>
                    <button
                      onClick={() => handleDeleteClass(classItem.id, classItem.name)}
-                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                     className="p-2 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                    >
                      <Trash2 size={16} />
                    </button>
