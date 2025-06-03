@@ -82,7 +82,7 @@ export default function QRInstructionsPage() {
       <div className="mt-6 flex justify-center">
         <Link 
           href="/dashboard/students/add/" 
-          className="bg-primary text-white px-5 py-2 rounded-lg hover:bg-orange-500 active:bg-orange-600 transition-colors transition-colors"
+          className="bg-gray-200 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-blu-700 active:bg-orange-700 transition-colors"
         >
           Kembali ke Tambah Data Siswa
         </Link>
