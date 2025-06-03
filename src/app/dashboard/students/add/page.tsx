@@ -266,7 +266,7 @@ export default function AddStudent() {
                  <Link
            href="/dashboard/students/qr/instructions"
                  className="text-sm text-blue-600 font-bold hover:underline"
-                 >
+                 > 
             Panduan
          </Link>
                 
