@@ -126,7 +126,7 @@ export default function Students() {
        </div>
 
        {userRole === 'admin' && (
-         <div className="flex flex-col sm:flex-row gap-2">
+         <div className="w-full flex flex-col sm:flex-row gap-2">
            <Link
              href="/dashboard/students/add"
              className="w-full flex bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-orange-500 transition-colors"
