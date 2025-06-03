@@ -197,29 +197,29 @@ export default function ClassesPage() {
        <div className="bg-[#F72585] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
-             <p className="text-blue-100 text-sm font-medium">Total Kelas</p>
+             <p className="text-white text-sm font-medium">Total Kelas</p>
              <p className="text-3xl font-bold">{classes.length}</p>
            </div>
-           <BookOpen className="h-10 w-10 text-blue-200" />
+           <BookOpen className="h-10 w-10 text-white" />
          </div>
        </div>
 
        <div className="bg-[#7B2CBF] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
-             <p className="text-green-100 text-sm font-medium">Total Siswa</p>
+             <p className="text-white text-sm font-medium">Total Siswa</p>
              <p className="text-3xl font-bold">
                {classes.reduce((sum, classItem) => sum + (classItem.studentCount || 0), 0)}
              </p>
            </div>
-           <Users className="h-10 w-10 text-green-200" />
+           <Users className="h-10 w-10 text-white" />
          </div>
        </div>
 
        <div className="bg-[#F77F00] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
-             <p className="text-purple-100 text-sm font-medium">Rata-rata per Kelas</p>
+             <p className="text-white text-sm font-medium">Rata-rata per Kelas</p>
              <p className="text-3xl font-bold">
                {classes.length > 0
                  ? Math.round(classes.reduce((sum, classItem) => sum + (classItem.studentCount || 0), 0) / classes.length)
@@ -227,7 +227,7 @@ export default function ClassesPage() {
                }
              </p>
            </div>
-           <GraduationCap className="h-10 w-10 text-purple-200" />
+           <GraduationCap className="h-10 w-10 text-white" />
          </div>
        </div>
      </div>
@@ -279,14 +279,14 @@ export default function ClassesPage() {
                <div className="flex items-center space-x-2">
                  <User className="h-4 w-4 text-gray-400" />
                  <span className="text-sm text-gray-600">
-                   Wali Kelas: {classItem.teacherName || 'Belum ditentukan'}
+                   Wali Kelas : {classItem.teacherName || 'Belum ditentukan'}
                  </span>
                </div>
 
                <div className="flex items-center space-x-2">
                  <Users className="h-4 w-4 text-gray-400" />
                  <span className="text-sm text-gray-600">
-                   {classItem.studentCount || 0} siswa
+                   Jumlah {classItem.studentCount || 0} siswa
                  </span>
                </div>
              </div>
@@ -301,6 +301,7 @@ export default function ClassesPage() {
            </motion.div>
          ))}
        </div>
+    <hr className="border-t border-none mb-5" />
      ) : (
        <div className="bg-white rounded-xl shadow-sm p-10 text-center">
          <div className="flex flex-col items-center">
