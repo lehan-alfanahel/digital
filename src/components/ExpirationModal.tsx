@@ -60,7 +60,7 @@ export default function ExpirationModal({
                   Masa Berlaku Akan Berakhir
                 </span></h4>
                 <p className="text-gray-600" data-unique-id="f7a055ba-d0f8-4af5-b1cf-f3863ca5ac92" data-file-name="components/ExpirationModal.tsx"><span className="editable-text" data-unique-id="3c288410-04b7-456d-a755-9ffb347fda8e" data-file-name="components/ExpirationModal.tsx">
-                  Penggunaan gratis aplikasi Absensi Digital akan berakhir dalam</span>{" "}
+                  Penggunaan gratis aplikasi Absensi Digital Sekolah anda akan berakhir dalam</span>{" "}
                   <span className="font-semibold text-red-600" data-unique-id="34e4b4a2-3753-40b9-b49c-4fa180179ce8" data-file-name="components/ExpirationModal.tsx" data-dynamic-text="true">{daysLeft}<span className="editable-text" data-unique-id="ff444e81-aa40-44ca-8067-b11c7375bf7f" data-file-name="components/ExpirationModal.tsx"> hari</span></span><span className="editable-text" data-unique-id="cf644949-424a-4845-b165-ffecf76a000d" data-file-name="components/ExpirationModal.tsx"> lagi. 
                    Segera Hubungi Kami untuk melanjutkan layanan.
                 </span></p>
