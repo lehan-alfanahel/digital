@@ -8,7 +8,7 @@ export default function QRInstructionsPage() {
   return (
     <div className="max-w-4xl mx-auto pb-20 md:pb-6 px-3 sm:px-4 md:px-6">
       <div className="flex items-center mb-6">
-        <Link href="/dashboard/students/qr" className="p-2 mr-2 hover:bg-gray-100 rounded-full">
+        <Link href="/dashboard/students/add" className="p-2 mr-2 hover:bg-gray-100 rounded-full">
           <ArrowLeft size={20} />
         </Link>
         
