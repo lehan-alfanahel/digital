@@ -262,7 +262,12 @@ export default function AddStudent() {
              {/* Nomor Telepon Orang Tua */}
              <div>
                <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700 mb-2">
-                 ID Telegram Orang Tua (Panduan)
+                 ID Telegram Orang Tua 
+                <Link
+           href="/dashboard/students/qr/instructions">
+           (Panduan)
+         </Link>
+                
                </label>
                <input
                  type="tel"
@@ -271,7 +276,7 @@ export default function AddStudent() {
                  value={formData.parentPhone}
                  onChange={handleChange}
                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                 placeholder="Masukkan nomor telepon"
+                 placeholder="Masukkan ID Telegram"
                />
              </div>
              {/* Alamat */}
