@@ -115,8 +115,8 @@ export default function Students() {
  });
  return (
    <div className="pb-20 md:pb-6">
-     <div className="flex flex-col items-center mb-6">
-       <div className="flex flex-col md:flex-row md:justify-center md:items-center w-full">
+     <div className="flex flex-col items-center mb-4">
+       <div className="flex mb-2 flex-col md:flex-row md:justify-center md:items-center w-full">
          <div className="flex items-center justify-center mb-3">
            <Users className="h-7 w-7 text-primary mr-3" />
            <h1 className="text-2xl font-bold text-gray-800 text-center">
