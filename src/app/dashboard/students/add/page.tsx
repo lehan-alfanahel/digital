@@ -293,7 +293,7 @@ export default function AddStudent() {
              </div>
            </div>
            {/* Submit Button */}
-           <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
+           <div className="flex justify-end mt-4 pt-6 border-t border-gray-200">
              <motion.button
                type="submit"
                disabled={loading || loadingClasses}
