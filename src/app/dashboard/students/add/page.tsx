@@ -262,10 +262,12 @@ export default function AddStudent() {
              {/* Nomor Telepon Orang Tua */}
              <div>
                <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700 mb-2">
-                 ID Telegram Orang Tua 
+                 ID Telegram Orang Tua - 
                 <Link
-           href="/dashboard/students/qr/instructions">
-           (Panduan)
+           href="/dashboard/students/qr/instructions"
+                 className="text-sm text-blue-600 font-bold hover:underline"
+                 >
+           Panduan
          </Link>
                 
                </label>
