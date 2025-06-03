@@ -227,10 +227,10 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                      </div>
 
                      <div>
-                       <p className="text-lg font-medium text-gray-700 mb-2">
+                       <p className="text-lg font-medium text-gray-700 mb-1">
                          Seret file Excel kesini
                        </p>
-                       <p className="text-gray-500 text-sm mb-4">atau</p>
+                       <p className="text-gray-500 text-sm mb-2">atau</p>
                        <label
                          htmlFor="excel-upload"
                          className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
