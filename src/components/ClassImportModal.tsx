@@ -150,7 +150,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
          className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
        >
          {/* Header */}
-         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
+         <div className="bg-gradient-to-r from-green-600 to-indigo-600 px-6 py-4">
            <div className="flex items-center justify-between">
              <div className="flex items-center space-x-3">
                <div className="bg-white/20 p-2 rounded-lg">
@@ -158,7 +158,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                </div>
                <div>
                  <h2 className="text-xl font-bold text-white">Import Data Kelas</h2>
-                 <p className="text-blue-100 text-sm">Upload file Excel untuk menambah data kelas secara massal</p>
+                
                </div>
              </div>
              <button
@@ -177,24 +177,25 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                  <div className="flex items-center justify-between">
                    <div>
                      <h3 className="text-lg font-semibold text-green-800 mb-2">
-                       Langkah 1: Download Template Excel
+                       Langkah 1: Unduh Template
                      </h3>
                      <p className="text-green-700 text-sm mb-4">
-                       Download file template Excel, isi dengan data kelas, lalu upload kembali
+                       Download file template Excel, isi dengan data kelas, lalu upload kembali.
                      </p>
-                     <div className="text-xs text-green-600 space-y-1">
-                       <p>• Kolom 1: Nama Kelas (contoh: VII A)</p>
-                       <p>• Kolom 2: Tingkat/Kelas (contoh: 7)</p>
-                       <p>• Kolom 3: Nama Wali Kelas (contoh: Budi Santoso, S.Pd)</p>
-                     </div>
-                   </div>
-                   <button
+
+
+                    
+                     <button
                      onClick={downloadTemplate}
-                     className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                     className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
                    >
                      <Download size={18} />
                      Download Template
                    </button>
+
+
+                   </div>
+                  
                  </div>
                </div>
                {/* Upload Section */}
