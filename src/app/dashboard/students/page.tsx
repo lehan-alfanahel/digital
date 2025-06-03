@@ -129,7 +129,7 @@ export default function Students() {
          <div className="w-full flex flex-col sm:flex-row gap-2">
            <Link
              href="/dashboard/students/add"
-             className="w-full flex bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-orange-500 transition-colors"
+             className="w-full flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-orange-500 active:bg-orange-600 transition-colors"
            >
              <Plus size={16} />
              Tambah Data Siswa
