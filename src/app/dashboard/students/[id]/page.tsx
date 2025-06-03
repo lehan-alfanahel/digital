@@ -81,7 +81,7 @@ export default function StudentDetail({ params }: { params: { id: string } }) {
             
             <Link 
               href={`/dashboard/students/edit/${student.id}`}
-              className="text-sm text-blue-600 font-semibold hover:underline flex items-center"
+              className="text-sm text-blue-600 hover:underline flex items-center"
             >
               <Edit size={14} className="mr-1" />
               Edit Data Siswa
