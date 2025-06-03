@@ -199,13 +199,13 @@ export default function ClassesPage() {
        </div>
 
        {userRole === 'admin' && (
-         <button
+         <center><button
            onClick={() => setShowAddModal(true)}
            className="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-orange-500 transition-colors shadow-sm"
          >
-           <Plus size={18} />
-           Tambah Kelas
-         </button>
+           {/*<Plus size={18} />*/}
+           Tambah Kelas Baru
+         </button></center>
        )}
      </div>
      {/* Search */}
