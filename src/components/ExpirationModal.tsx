@@ -69,7 +69,7 @@ export default function ExpirationModal({
 
           {/* Contact Information */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mb-6" data-unique-id="7362b1f0-f80a-46d5-be62-c991880b2c58" data-file-name="components/ExpirationModal.tsx">
-            <h5 className="font-semibold text-gray-700 mb-1 text-center" data-unique-id="0b4abfb8-6803-4b45-81f9-63d307250304" data-file-name="components/ExpirationModal.tsx"><span className="editable-text" data-unique-id="e2e1e4d7-3bf1-43c0-a2c5-e4706585cc1d" data-file-name="components/ExpirationModal.tsx">
+            <h5 className="font-semibold text-gray-800 mb-1 text-center" data-unique-id="0b4abfb8-6803-4b45-81f9-63d307250304" data-file-name="components/ExpirationModal.tsx"><span className="editable-text" data-unique-id="e2e1e4d7-3bf1-43c0-a2c5-e4706585cc1d" data-file-name="components/ExpirationModal.tsx">
               Hubungi Untuk Berlangganan
             </span></h5>
             
