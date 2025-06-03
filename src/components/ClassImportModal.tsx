@@ -173,18 +173,15 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
            {!showPreview ? (
              <>
                {/* Download Template Section */}
-               <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+               <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
                  <div className="flex items-center justify-between">
                    <div>
                      <h3 className="text-lg font-semibold text-green-800 mb-2">
-                       Langkah 1: Unduh Template
+                       Langkah 1 : Unduh Template
                      </h3>
                      <p className="text-green-700 text-sm mb-4">
                        Download file template Excel, isi dengan data kelas, lalu upload kembali.
                      </p>
-
-
-                    
                      <button
                      onClick={downloadTemplate}
                      className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
@@ -199,16 +196,16 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                  </div>
                </div>
                {/* Upload Section */}
-               <div className="space-y-4">
+               <div className="space-y-2">
                  <h3 className="text-lg font-semibold text-gray-800">
-                   Langkah 2: Upload File Excel
+                   Langkah 2 : Upload File Excel
                  </h3>
 
                  <div
                    onDrop={handleDrop}
                    onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
                    onDragLeave={() => setDragActive(false)}
-                   className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+                   className={`border-2 border-dashed rounded-xl p-4 text-center transition-colors ${
                      dragActive
                        ? 'border-blue-500 bg-blue-50'
                        : 'border-gray-300 hover:border-gray-400'
@@ -224,7 +221,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
 
                    <div className="space-y-4">
                      <div className="flex justify-center">
-                       <div className="bg-blue-100 p-4 rounded-full">
+                       <div className="bg-blue-100 p-3 rounded-full">
                          <Upload className="h-8 w-8 text-blue-600" />
                        </div>
                      </div>
@@ -236,7 +233,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
                        <p className="text-gray-500 text-sm mb-4">atau</p>
                        <label
                          htmlFor="excel-upload"
-                         className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                         className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
                        >
                          <FileSpreadsheet size={18} />
                          Pilih File Excel
