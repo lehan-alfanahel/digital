@@ -221,14 +221,14 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
 
                    <div className="space-y-4">
                      <div className="flex justify-center">
-                       <div className="bg-blue-100 p-3 rounded-full">
+                       <div className="bg-blue-100 p-2 rounded-full">
                          <Upload className="h-8 w-8 text-blue-600" />
                        </div>
                      </div>
 
                      <div>
                        <p className="text-lg font-medium text-gray-700 mb-2">
-                         Seret file Excel di sini
+                         Seret file Excel kesini
                        </p>
                        <p className="text-gray-500 text-sm mb-4">atau</p>
                        <label
