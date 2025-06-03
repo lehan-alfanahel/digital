@@ -129,7 +129,7 @@ export default function Students() {
          <div className="flex flex-col sm:flex-row gap-2">
            <Link
              href="/dashboard/students/add"
-             className="flex items-center justify-center gap-2 bg-primary text-white px-5 py-2 rounded-lg hover:bg-orange-500 active:bg-orange-600 transition-colors shadow-sm text-sm w-full sm:w-auto"
+             className="w-full flex bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-orange-500 transition-colors"
            >
              <Plus size={16} />
              Tambah Data Siswa
@@ -137,7 +137,7 @@ export default function Students() {
 
            <button
              onClick={() => setImportModalOpen(true)}
-             className="flex items-center justify-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 active:bg-green-800 transition-colors shadow-sm text-sm w-full sm:w-auto"
+             className="w-full flex items-center justify-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-lg hover:bg-green-700 active:bg-green-800 transition-colors"
            >
              <FileSpreadsheet size={16} />
              Import Excel
