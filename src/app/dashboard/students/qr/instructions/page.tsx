@@ -25,8 +25,6 @@ export default function QRInstructionsPage() {
         
         <div className="prose max-w-full">
           
-          
-          <h3 className="text-lg font-medium mt-6 mb-3">Integrasi dengan Telegram:</h3>
           <p className="text-gray-700">
             Sistem absensi ini terintegrasi dengan Bot Telegram untuk mengirimkan notifikasi kepada orang tua siswa. 
             Untuk mengaktifkan fitur ini:
@@ -36,7 +34,7 @@ export default function QRInstructionsPage() {
             <li className="text-gray-700">
               <span className="font-medium">Cari Bot Telegram</span>
               <p className="mt-1 ml-6">
-                Buka aplikasi Telegram dan cari bot <span className="font-semibold">@AbsensiDigitalBot</span>
+                Buka aplikasi Telegram dan cari bot <span className="font-semibold">@userinfobot</span>
               </p>
             </li>
             
@@ -50,7 +48,7 @@ export default function QRInstructionsPage() {
             <li className="text-gray-700">
               <span className="font-medium">Dapatkan Telegram Chat ID</span>
               <p className="mt-1 ml-6">
-                Ketik "/id" untuk mendapatkan Chat ID Telegram Anda. Ini yang akan digunakan sebagai telegramNumber siswa.
+                Ketik "/id" untuk mendapatkan Chat ID Telegram Anda. Ini yang akan digunakan sebagai Telegram Number siswa.
               </p>
             </li>
             
@@ -67,27 +65,17 @@ export default function QRInstructionsPage() {
             <div className="flex items-center">
               <LinkIcon className="h-4 w-4 text-blue-600 mr-2" />
               <a 
-                href="https://t.me/AbsensiDigitalBot" 
+                href="https://t.me/userinfobot" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:underline"
               >
-                t.me/AbsensiDigitalBot
+                t.me/userinfobot
               </a>
             </div>
           </div>
           
-          <div className="bg-green-50 p-4 rounded-lg mt-6 border border-green-200">
-            <h4 className="text-green-800 font-medium mb-2">Konfigurasi Bot Telegram</h4>
-            <p className="text-green-700 text-sm">
-              Bot Telegram yang digunakan:
-            </p>
-            <ul className="text-green-700 text-sm mt-2 list-disc list-inside">
-              <li><span className="font-medium">Nama Bot:</span> AbsensiDigitalBot</li>
-              <li><span className="font-medium">Username:</span> @AbsensiDigitalBot</li>
-              <li><span className="font-medium">Token Bot:</span> 7662377324:AAEFhwY-y1q3IrX4OEJAUG8VLa8DqNndH6E</li>
-            </ul>
-          </div>
+          
         </div>
       </div>
       
