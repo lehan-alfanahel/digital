@@ -209,7 +209,7 @@ export default function ImportStudentsModal({
                    <ul className="text-yellow-700 text-sm mt-2 space-y-1">
                      <li>• Kolom A : Nama Lengkap (wajib)</li>
                      <li>• Kolom B : NISN (wajib)</li>
-                     <li>• Kolom C : Kelas (wajib, sesuai kelas)</li>
+                     <li>• Kolom C : Kelas (sesuai kelas)</li>
                      <li>• Kolom D : Jenis Kelamin</li>
                      <li>• Kolom E : Tanggal Lahir</li>
                      <li>• Kolom F : Nama Orang Tua/Wali</li>
@@ -219,6 +219,7 @@ export default function ImportStudentsModal({
                  </div>
                </div>
              </div>
+            <center><Link a href="/dashboard/students/qr/instructions" className="text-sm text-blue-600 font-bold hover:underline"> (Panduan Melihat ID Telegram)</Link></center>
            </div>
          ) : (
            <div>
