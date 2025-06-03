@@ -169,7 +169,7 @@ export default function ClassImportModal({ isOpen, onClose, onImport }: ClassImp
              </button>
            </div>
          </div>
-         <div className="p-6 space-y-6">
+         <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
            {!showPreview ? (
              <>
                {/* Download Template Section */}
