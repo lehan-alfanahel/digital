@@ -300,8 +300,9 @@ export default function ClassesPage() {
              </div>
            </motion.div>
          ))}
+        <hr className="border-t border-none mb-5" />
        </div>
-    <hr className="border-t border-none mb-5" />
+    
      ) : (
        <div className="bg-white rounded-xl shadow-sm p-10 text-center">
          <div className="flex flex-col items-center">
