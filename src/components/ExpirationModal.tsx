@@ -31,7 +31,7 @@ export default function ExpirationModal({
             <div className="flex items-center space-x-3" data-unique-id="9dc7878a-fc2a-4e89-8ab8-230287f626fc" data-file-name="components/ExpirationModal.tsx">
               <AlertTriangle className="h-6 w-6 text-white" />
               <h3 className="text-lg font-semibold text-white" data-unique-id="11de3ebc-07cc-4ed1-8f42-eb3e8efaf596" data-file-name="components/ExpirationModal.tsx" data-dynamic-text="true">
-                {daysLeft <= 0 ? "Masa Berlaku Habis" : "Masa Berlaku Akan Habis"}
+                {daysLeft <= 0 ? "Masa Berlaku Habis" : "PERINGATAN !!!"}
               </h3>
             </div>
             <button onClick={onClose} className="text-white/80 hover:text-white transition-colors" data-unique-id="5853fb6e-b3f9-487e-a1a8-8eac5d29ed4f" data-file-name="components/ExpirationModal.tsx">
