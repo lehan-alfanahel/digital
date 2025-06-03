@@ -317,13 +317,13 @@ export default function ClassesPage() {
              }
            </p>
            <div className="flex gap-3">
-             <button
+            {/*<button
                onClick={() => setShowImportModal(true)}
                className="flex items-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-lg hover:bg-green-700 transition-colors"
              >
                <Upload size={18} />
                Import Excel
-             </button>
+             </button>*/}
              {userRole === 'admin' && (
                <Link
                  href="/dashboard/classes/add"
