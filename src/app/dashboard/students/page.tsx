@@ -267,6 +267,7 @@ export default function Students() {
        schoolId={schoolId || ''}
        classes={classes}
      />
+    <hr className="border-t border-none mb-5" />
      {/* Confirmation Dialog */}
      <ConfirmDialog
        isOpen={deleteDialogOpen}
