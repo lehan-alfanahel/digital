@@ -124,7 +124,7 @@ export default function AddStudent() {
            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-xl mr-4">
              <User className="h-6 w-6 text-white" />
            </div>
-           <h1 className="text-3xl font-bold text-gray-800">Tambah Siswa Baru</h1>
+           <h1 className="text-3xl font-bold text-gray-800">Tambah Data</h1>
          </div>
        </div>
        {/* Form */}
@@ -135,8 +135,8 @@ export default function AddStudent() {
          className="bg-white rounded-2xl shadow-xl overflow-hidden"
        >
          <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
-           <h2 className="text-2xl font-semibold text-white">Informasi Siswa</h2>
-           <p className="text-blue-100 mt-2">Lengkapi data siswa dengan benar</p>
+           <h2 className="text-2xl font-semibold text-white">Tambah Siswa Baru</h2>
+           <p className="text-blue-100 mt-2">Lengkapi data dengan benar</p>
          </div>
          <form onSubmit={handleSubmit} className="p-8">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -262,7 +262,7 @@ export default function AddStudent() {
              {/* Nomor Telepon Orang Tua */}
              <div>
                <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700 mb-2">
-                 Nomor Telepon Orang Tua
+                 Nomor ID Telegram Orang Tua
                </label>
                <input
                  type="tel"
