@@ -286,17 +286,17 @@ export default function ClassesPage() {
                <div className="flex items-center space-x-2">
                  <Users className="h-4 w-4 text-gray-400" />
                  <span className="text-sm text-gray-600">
-                   Jumlah {classItem.studentCount || 0} siswa
+                   Jumlah {classItem.studentCount || 0} Siswa
                  </span>
                </div>
              </div>
              <div className="mt-4 pt-4 border-t border-gray-100">
-               <Link
+              {/*<Link
                  href={`/dashboard/students?class=${encodeURIComponent(classItem.name)}`}
                  className="text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline"
                >
                  Lihat daftar siswa →
-               </Link>
+               </Link>*/}
              </div>
            </motion.div>
         
