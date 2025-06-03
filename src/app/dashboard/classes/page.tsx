@@ -296,7 +296,7 @@ export default function ClassesPage() {
          ))}
         
        </div>
-    <hr className="border-t border-none mb-5" />
+    
      ) : (
        <div className="bg-white rounded-xl shadow-sm p-10 text-center">
          <div className="flex flex-col items-center">
@@ -337,6 +337,7 @@ export default function ClassesPage() {
          </div>
        </div>
      )}
+    <hr className="border-t border-none mb-5" />
      {/* Import Modal */}
      <ClassImportModal
        isOpen={showImportModal}
