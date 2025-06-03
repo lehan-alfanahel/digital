@@ -11,22 +11,22 @@ export default function QRInstructionsPage() {
         <Link href="/dashboard/students/qr" className="p-2 mr-2 hover:bg-gray-100 rounded-full">
           <ArrowLeft size={20} />
         </Link>
-        <QrCode className="h-7 w-7 text-primary mr-3" />
+        
         <h1 className="text-2xl font-bold text-gray-800">Panduan ID Telegram</h1>
       </div>
       
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
-        <div className="flex items-center mb-4">
+      <div className="bg-white rounded-xl shadow-sm p-5 mb-6">
+        <div className="flex items-center mb-3">
           <div className="bg-blue-100 p-2 rounded-lg mr-3">
             <Info className="h-5 w-5 text-blue-600" />
           </div>
-          <h2 className="text-lg font-semibold">Cara Melihat ID Telegram Kita</h2>
+          <h2 className="text-lg font-semibold">Cara Melihat ID Telegram</h2>
         </div>
         
         <div className="prose max-w-full">
           
           <p className="text-gray-700">
-            Sistem absensi ini terintegrasi dengan Bot Telegram untuk mengirimkan notifikasi kepada orang tua siswa. 
+            Sistem absensi ini terintegrasi dengan Bot Telegram untuk mengirimkan notifikasi secara real-time kepada orang tua siswa tentang kehadiran siswa di sekolah. 
             Untuk mengaktifkan fitur ini:
           </p>
           
@@ -81,12 +81,14 @@ export default function QRInstructionsPage() {
       
       <div className="mt-6 flex justify-center">
         <Link 
-          href="/dashboard/scan" 
-          className="bg-primary text-white px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-colors"
+          href="/dashboard/student/add" 
+          className="bg-primary text-white px-5 py-2 rounded-lg hover:bg-orange-500 active:bg-orange-600 transition-colors transition-colors"
         >
-          Kembali ke Halaman Scan
+          Kembali ke Tambah Data Siswa
         </Link>
       </div>
     </div>
+	<hr className="border-t border-none mb-5" />
+	<hr className="border-t border-none mb-5" />
   );
 }
