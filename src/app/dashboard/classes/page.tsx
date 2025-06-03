@@ -146,7 +146,7 @@ export default function ClassesPage() {
  return (
    <div className="pb-20 md:pb-6">
      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-       <div className="flex mb-1 items-center">
+       <div className="flex items-center">
          <BookOpen className="h-7 w-7 text-blue-600 mr-3" />
          <div>
            <h1 className="text-2xl font-bold text-gray-800">Manajemen Kelas</h1>
@@ -155,9 +155,7 @@ export default function ClassesPage() {
        </div>
 
        <div className="flex flex-col sm:flex-row gap-2">
-
-
-        
+         
          {userRole === 'admin' && (
            <Link
              href="/dashboard/classes/add"
@@ -199,29 +197,29 @@ export default function ClassesPage() {
        <div className="bg-[#F72585] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
-             <p className="text-white text-sm font-medium">Total Kelas</p>
+             <p className="text-blue-100 text-sm font-medium">Total Kelas</p>
              <p className="text-3xl font-bold">{classes.length}</p>
            </div>
-           <BookOpen className="h-10 w-10 text-white" />
+           <BookOpen className="h-10 w-10 text-blue-200" />
          </div>
        </div>
 
        <div className="bg-[#7B2CBF] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
-             <p className="text-white text-sm font-medium">Total Siswa</p>
+             <p className="text-green-100 text-sm font-medium">Total Siswa</p>
              <p className="text-3xl font-bold">
                {classes.reduce((sum, classItem) => sum + (classItem.studentCount || 0), 0)}
              </p>
            </div>
-           <Users className="h-10 w-10 text-white" />
+           <Users className="h-10 w-10 text-green-200" />
          </div>
        </div>
 
        <div className="bg-[#F77F00] rounded-xl p-6 text-white">
          <div className="flex items-center justify-between">
            <div>
-             <p className="text-white text-sm font-medium">Rata-rata per Kelas</p>
+             <p className="text-purple-100 text-sm font-medium">Rata-rata per Kelas</p>
              <p className="text-3xl font-bold">
                {classes.length > 0
                  ? Math.round(classes.reduce((sum, classItem) => sum + (classItem.studentCount || 0), 0) / classes.length)
@@ -229,7 +227,7 @@ export default function ClassesPage() {
                }
              </p>
            </div>
-           <GraduationCap className="h-10 w-10 text-white" />
+           <GraduationCap className="h-10 w-10 text-purple-200" />
          </div>
        </div>
      </div>
@@ -245,7 +243,7 @@ export default function ClassesPage() {
              key={classItem.id}
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-200"
+             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-200"
            >
              <div className="flex items-start justify-between mb-4">
                <div className="flex items-center space-x-3">
@@ -264,7 +262,7 @@ export default function ClassesPage() {
                  <div className="flex space-x-1">
                    <Link
                      href={`/dashboard/classes/edit/${classItem.id}`}
-                     className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                     className="p-2 text-white hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                    >
                      <Edit size={16} />
                    </Link>
@@ -281,7 +279,7 @@ export default function ClassesPage() {
                <div className="flex items-center space-x-2">
                  <User className="h-4 w-4 text-gray-400" />
                  <span className="text-sm text-gray-600">
-                   Wali Kelas : {classItem.teacherName || 'Belum ditentukan'}
+                   Wali Kelas: {classItem.teacherName || 'Belum ditentukan'}
                  </span>
                </div>
 
@@ -297,7 +295,7 @@ export default function ClassesPage() {
                  href={`/dashboard/students?class=${encodeURIComponent(classItem.name)}`}
                  className="text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline"
                >
-                 Lihat Daftar Siswa →
+                 Lihat daftar siswa →
                </Link>
              </div>
            </motion.div>
