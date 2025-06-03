@@ -299,7 +299,7 @@ export default function ClassesPage() {
                </Link>
              </div>
            </motion.div>
-        <hr className="border-t border-none mb-5" />
+        
          ))}
         
        </div>
@@ -352,4 +352,5 @@ export default function ClassesPage() {
      />
    </div>
  );
+ <hr className="border-t border-none mb-5" />
 }
