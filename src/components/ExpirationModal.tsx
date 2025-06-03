@@ -42,8 +42,8 @@ export default function ExpirationModal({
 
         {/* Content */}
         <div className="p-6" data-unique-id="f51f037d-7e02-4c15-bbac-69a1a2b107cc" data-file-name="components/ExpirationModal.tsx" data-dynamic-text="true">
-          <div className="text-center mb-6" data-unique-id="fde84783-2045-4418-8bc5-4bf7fd897d02" data-file-name="components/ExpirationModal.tsx" data-dynamic-text="true">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4" data-unique-id="0842be0e-827c-4718-9880-736502c69259" data-file-name="components/ExpirationModal.tsx">
+          <div className="text-center mb-5" data-unique-id="fde84783-2045-4418-8bc5-4bf7fd897d02" data-file-name="components/ExpirationModal.tsx" data-dynamic-text="true">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3" data-unique-id="0842be0e-827c-4718-9880-736502c69259" data-file-name="components/ExpirationModal.tsx">
               <AlertTriangle className="h-8 w-8 text-red-600" />
             </div>
             
