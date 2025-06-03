@@ -138,7 +138,7 @@ export default function AddStudent() {
            <h2 className="text-2xl font-semibold text-white">Tambah Siswa Baru</h2>
            {/*<p className="text-blue-100 mt-2">Lengkapi data dengan benar</p>*/}
          </div>
-         <form onSubmit={handleSubmit} className="p-6">
+         <form onSubmit={handleSubmit} className="p-5">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {/* Nama Lengkap */}
              <div className="md:col-span-2">
