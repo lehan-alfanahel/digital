@@ -69,7 +69,7 @@ export default function TeacherManagementTable({
          <thead>
            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-               No
+              
              </th>
              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                Informasi Pendidik
@@ -81,7 +81,7 @@ export default function TeacherManagementTable({
                Sekolah
              </th>
              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-               Bergabung
+               
              </th>
              <th className="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                Status Akun
@@ -95,7 +95,7 @@ export default function TeacherManagementTable({
                className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200"
              >
                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                 {index + 1}
+                 
                </td>
 
                <td className="px-6 py-4 whitespace-nowrap">
@@ -151,15 +151,7 @@ export default function TeacherManagementTable({
                </td>
 
                <td className="px-6 py-4 whitespace-nowrap">
-                 <div className="flex items-center text-sm text-gray-500">
-                   <Calendar className="h-4 w-4 mr-2" />
-                   {formatDate(teacher.createdAt)}
-                 </div>
-                 {teacher.lastLogin && (
-                   <div className="text-xs text-gray-400 mt-1">
-                     Login terakhir: {formatDate(teacher.lastLogin)}
-                   </div>
-                 )}
+                 
                </td>
 
                <td className="px-6 py-4 whitespace-nowrap text-center">
