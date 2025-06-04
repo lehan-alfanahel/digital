@@ -174,7 +174,7 @@ export default function PendidikPage() {
        <center><button
          onClick={handleRefresh}
          disabled={loading}
-         className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2.5 rounded-lg hover:from-green-600 hover:to-green-700 transition-all shadow-md"
+         className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2.5 rounded-lg hover:from-green-600 hover:to-green-700 transition-all shadow-md"
        >
          {loading ? (
            <Loader2 className="h-5 w-5 animate-spin" />
