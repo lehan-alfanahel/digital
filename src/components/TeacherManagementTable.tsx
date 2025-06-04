@@ -68,9 +68,7 @@ export default function TeacherManagementTable({
        <table className="w-full">
          <thead>
            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-             <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              
-             </th>
+            
              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                Informasi Pendidik
              </th>
@@ -80,9 +78,7 @@ export default function TeacherManagementTable({
              <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                Sekolah
              </th>
-             <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-               
-             </th>
+             
              <th className="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                Status Akun
              </th>
@@ -94,9 +90,7 @@ export default function TeacherManagementTable({
                key={teacher.id}
                className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200"
              >
-               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                 
-               </td>
+               
 
                <td className="px-6 py-4 whitespace-nowrap">
                  <div className="flex items-center">
@@ -150,9 +144,6 @@ export default function TeacherManagementTable({
                  </div>
                </td>
 
-               <td className="px-6 py-4 whitespace-nowrap">
-                 
-               </td>
 
                <td className="px-6 py-4 whitespace-nowrap text-center">
                  <AccountToggle
