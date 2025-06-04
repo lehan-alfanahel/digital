@@ -254,8 +254,9 @@ export default function PendidikPage() {
        loading={loading}
        onToggleStatus={handleToggleAccountStatus}
      />
+    <hr className="border-t border-none mb-5" />
    </div>
   
  );
- <hr className="border-t border-none mb-5" />
+ 
 }
