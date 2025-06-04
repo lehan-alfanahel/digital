@@ -167,11 +167,11 @@ export default function PendidikPage() {
          </div>
          <div>
            <h1 className="text-2xl font-bold text-gray-800">Manajemen Pendidik</h1>
-           <p className="text-gray-600 text-sm">Kelola akun guru dan tenaga pendidik dari semua sekolah</p>
+           <p className="text-gray-600 text-sm">Kelola akun guru dari semua sekolah</p>
          </div>
        </div>
 
-       <button
+       <center><button
          onClick={handleRefresh}
          disabled={loading}
          className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2.5 rounded-lg hover:from-green-600 hover:to-green-700 transition-all shadow-md"
@@ -182,7 +182,7 @@ export default function PendidikPage() {
            <RefreshCw className="h-5 w-5" />
          )}
          Refresh Data
-       </button>
+       </button></center>
      </div>
      {/* Statistics Cards */}
      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
