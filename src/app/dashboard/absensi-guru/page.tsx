@@ -136,7 +136,7 @@ export default function AbsensiGuruPage() {
    }
  };
  return <div className="pb-20 md:pb-6">
-     <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
+     <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
        <div className="flex items-center mb-4 md:mb-0">
          <Users className="h-7 w-7 text-primary mr-3" />
          <h1 className="text-2xl font-bold text-gray-800">Dashboard Absensi Guru Berbasis Lokasi</h1>
@@ -158,7 +158,7 @@ export default function AbsensiGuruPage() {
          <Loader2 className="h-12 w-12 text-primary animate-spin" />
        </div> : <>
          {/* Stats Cards */}
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
            <motion.div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-4 text-white shadow-md" initial={{
          opacity: 0,
          y: 20
@@ -286,7 +286,7 @@ export default function AbsensiGuruPage() {
            </div>
          </div>
          {/* Quick Access */}
-         <div className="bg-white rounded-xl shadow-sm p-3 mb-6 mt-6">
+         <div className="bg-white rounded-xl shadow-sm p-3 mb-6 mt-4">
            <h2 className="text-lg font-semibold mb-4 flex items-center">
              <Zap className="h-5 w-5 text-primary mr-2" />
              Akses Cepat Admin
