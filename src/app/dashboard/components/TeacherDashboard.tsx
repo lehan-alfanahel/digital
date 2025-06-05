@@ -360,7 +360,7 @@ export default function TeacherDashboard({
                  <div className="bg-[#7B2CBF] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
                    <QrCode className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Scan Absensi Guru</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Absensi Guru</h3>
                </div>
              </Link>
 
