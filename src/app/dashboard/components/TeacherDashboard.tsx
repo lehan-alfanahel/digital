@@ -301,7 +301,7 @@ export default function TeacherDashboard({
                <div className="bg-orange-100 p-2 rounded-lg">
                  <CheckCircle className="h-5 w-5 text-orange-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Siswa Hadir Hari Ini</h3>
+               <h3 className="text-sm font-medium text-gray-700">Total Siswa Hadir Hari Ini</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
