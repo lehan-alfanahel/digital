@@ -293,7 +293,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-1xl text-center font-bold text-purple-600">{localStats.attendanceRate}% Persen</p>
+               <p className="text-1xl text-center font-bold text-purple-600">{localStats.attendanceRate} Persen</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-2 border border-orange-200">
