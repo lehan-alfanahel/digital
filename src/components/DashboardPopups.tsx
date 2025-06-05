@@ -277,7 +277,7 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
              {/* Content */}
              <div className="p-4">
                <div className="flex items-start space-x-3 mb-0">
-                 {/*{getAnnouncementIcon(announcements[currentAnnouncementIndex].type)}*/}
+                 {getAnnouncementIcon(announcements[currentAnnouncementIndex].type)}
                  <div className="flex-1">
                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
                      {announcements[currentAnnouncementIndex].title}
