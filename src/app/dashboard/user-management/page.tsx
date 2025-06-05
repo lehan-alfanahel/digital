@@ -552,7 +552,7 @@ export default function UserManagement() {
                            Langkah 1 : Download Template
                          </h3>
                          <p className="text-blue-700 text-sm mb-3">
-                           Download file template Excel, isi dengan data pengguna, lalu upload kembali.
+                           Download file template Excel, isi dengan data Pendidik, lalu upload kembali.
                          </p>
                          <div className="text-xs mb-4  text-blue-600 space-y-1">
                            <p>• Kolom 1 : NAMA (Nama lengkap Pengguna)</p>
@@ -606,7 +606,7 @@ export default function UserManagement() {
                          </div>
 
                          <p className="text-xs text-gray-500">
-                           Hanya menerima file .xlsx maksimal 100 pengguna
+                           Hanya menerima file .xlsx maksimal 100 data
                          </p>
                        </div>
                      </div>
