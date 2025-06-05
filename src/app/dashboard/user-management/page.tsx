@@ -393,14 +393,8 @@ export default function UserManagement() {
          <h1 className="text-2xl font-bold text-gray-800">Daftar Guru dan Tendik</h1>
        </div>
 
-       <div className="flex gap-3">
-         <button
-           onClick={() => setShowImportModal(true)}
-           className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors shadow-sm"
-         >
-           <Upload size={18} />
-           Import Excel
-         </button>
+       <div className="flex flex-col sm:flex-row gap-2">
+        
 
          <button
            onClick={handleAddUser}
@@ -409,10 +403,18 @@ export default function UserManagement() {
            <UserPlus size={18} />
            Tambah Data Pendidik
          </button>
+
+         <button
+           onClick={() => setShowImportModal(true)}
+           className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+         >
+           <Upload size={18} />
+           Import Dengan Excel
+         </button>
        </div>
      </div>
      {/* Search bar */}
-     <div className="mb-6">
+     <div className="mb-4">
        <div className="relative">
          <input
            type="text"
