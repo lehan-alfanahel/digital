@@ -262,7 +262,7 @@ export default function TeacherDashboard({
                <div className="bg-blue-100 p-2 rounded-lg">
                  <Users className="h-5 w-5 text-blue-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Total Siswa</h3>
+               <h3 className="text-sm font-medium text-gray-700">Total Semua Siswa</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
@@ -275,7 +275,7 @@ export default function TeacherDashboard({
                <div className="bg-green-100 p-2 rounded-lg">
                  <BookOpen className="h-5 w-5 text-green-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Total Kelas</h3>
+               <h3 className="text-sm font-medium text-gray-700">Total Semua Kelas</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
@@ -301,7 +301,7 @@ export default function TeacherDashboard({
                <div className="bg-orange-100 p-2 rounded-lg">
                  <CheckCircle className="h-5 w-5 text-orange-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Hadir Hari Ini</h3>
+               <h3 className="text-sm font-medium text-gray-700">Siswa Hadir Hari Ini</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
@@ -376,6 +376,8 @@ export default function TeacherDashboard({
          </div>
        </>
      )}
+    <hr className="border-t border-none mb-5" />
+    <hr className="border-t border-none mb-5" />
    </div>
  );
 }
