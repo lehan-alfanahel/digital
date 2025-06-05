@@ -586,16 +586,16 @@ export default function UserManagement() {
 
                        <div className="space-y-4">
                          <div className="flex justify-center">
-                           <div className="bg-green-100 p-3 rounded-full">
+                           <div className="bg-green-100 p-2 rounded-full">
                              <Upload className="h-8 w-8 text-green-600" />
                            </div>
                          </div>
 
                          <div>
-                           <p className="text-lg font-medium text-gray-700 mb-2">
+                          {/*<p className="text-lg font-medium text-gray-700 mb-2">
                              Drag & Drop file Excel di sini
                            </p>
-                           <p className="text-gray-500 text-sm mb-4">atau</p>
+                           <p className="text-gray-500 text-sm mb-4">atau</p>*/}
                            <label
                              htmlFor="excel-upload"
                              className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
