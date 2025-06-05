@@ -516,15 +516,14 @@ export default function UserManagement() {
              className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
            >
              {/* Header */}
-             <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
+             <div className="bg-gradient-to-r from-green-600 to-indigo-600 px-6 py-4">
                <div className="flex items-center justify-between">
                  <div className="flex items-center space-x-3">
                    <div className="bg-white/20 p-2 rounded-lg">
                      <FileSpreadsheet className="h-6 w-6 text-white" />
                    </div>
                    <div>
-                     <h2 className="text-xl font-bold text-white">Import Data Pengguna</h2>
-                     <p className="text-green-100 text-sm">Upload file Excel untuk menambah data pengguna secara massal</p>
+                     <h2 className="text-lg font-bold text-white">Import Data Pengguna</h2>
                    </div>
                  </div>
                  <button
@@ -542,41 +541,41 @@ export default function UserManagement() {
                </div>
              </div>
              {/* Content */}
-             <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+             <div className="p-3 overflow-y-auto max-h-[calc(90vh-140px)]">
                {!importPreview ? (
                  <div className="space-y-6">
                    {/* Download Template Section */}
-                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-                     <div className="flex items-center justify-between">
+                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
+                     <div className="flex flex-col items-center mb-1 justify-between">
                        <div>
                          <h3 className="text-lg font-semibold text-blue-800 mb-2">
-                           Langkah 1: Download Template Excel
+                           Langkah 1 : Download Template
                          </h3>
-                         <p className="text-blue-700 text-sm mb-4">
-                           Download file template Excel, isi dengan data pengguna, lalu upload kembali
+                         <p className="text-blue-700 text-sm mb-3">
+                           Download file template Excel, isi dengan data pengguna, lalu upload kembali.
                          </p>
-                         <div className="text-xs text-blue-600 space-y-1">
-                           <p>• Kolom 1: NAMA (Nama lengkap pengguna)</p>
-                           <p>• Kolom 2: E-MAIL (Email valid)</p>
-                           <p>• Kolom 3: HAK AKSES (admin/teacher/student)</p>
+                         <div className="text-xs mb-4  text-blue-600 space-y-1">
+                           <p>• Kolom 1 : NAMA (Nama lengkap Pengguna)</p>
+                           <p>• Kolom 2 : E-MAIL (Email yang valid)</p>
+                           <p>• Kolom 3 : HAK AKSES (admin/teacher/student)</p>
                          </div>
                        </div>
                        <button
                          onClick={downloadTemplate}
                          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                        >
-                         <Download size={18} />
-                         Download Template
+                         <Download size={16} />
+                         Download Template Excel
                        </button>
                      </div>
                    </div>
                    {/* Upload Section */}
-                   <div className="space-y-4">
+                   <div className="space-y-3">
                      <h3 className="text-lg font-semibold text-gray-800">
-                       Langkah 2: Upload File Excel
+                       Langkah 2 : Upload File Excel
                      </h3>
 
-                     <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-400 transition-colors">
+                     <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-green-400 transition-colors">
                        <input
                          type="file"
                          accept=".xlsx"
@@ -587,7 +586,7 @@ export default function UserManagement() {
 
                        <div className="space-y-4">
                          <div className="flex justify-center">
-                           <div className="bg-green-100 p-4 rounded-full">
+                           <div className="bg-green-100 p-3 rounded-full">
                              <Upload className="h-8 w-8 text-green-600" />
                            </div>
                          </div>
@@ -599,7 +598,7 @@ export default function UserManagement() {
                            <p className="text-gray-500 text-sm mb-4">atau</p>
                            <label
                              htmlFor="excel-upload"
-                             className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
+                             className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
                            >
                              <FileSpreadsheet size={18} />
                              Pilih File Excel
@@ -607,7 +606,7 @@ export default function UserManagement() {
                          </div>
 
                          <p className="text-xs text-gray-500">
-                           Hanya menerima file .xlsx dengan maksimal 100 pengguna
+                           Hanya menerima file .xlsx maksimal 100 pengguna
                          </p>
                        </div>
                      </div>
