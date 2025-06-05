@@ -388,7 +388,7 @@ export default function UserManagement() {
  return (
    <div className="pb-20 md:pb-6">
      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-       <div className="flex items-center mb-4 md:mb-0">
+       <div className="flex items-center mb-5 md:mb-0">
          <Users className="h-7 w-7 text-primary mr-3" />
          <h1 className="text-2xl font-bold text-gray-800">Daftar Guru dan Tendik</h1>
        </div>
