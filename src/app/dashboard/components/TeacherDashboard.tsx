@@ -364,7 +364,7 @@ export default function TeacherDashboard({
                </div>
              </Link>
 
-             <Link href="/dashboard/profile-usere" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
+             <Link href="/dashboard/profile-user" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#4361EE] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
                    <FileText className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
