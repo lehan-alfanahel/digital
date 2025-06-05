@@ -139,7 +139,7 @@ export default function AbsensiGuruPage() {
      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
        <div className="flex items-center mb-4 md:mb-0">
          <Users className="h-7 w-7 text-primary mr-3" />
-         <h1 className="text-2xl font-bold text-gray-800">Dashboard Absensi Guru</h1>
+         <h1 className="text-2xl font-bold text-gray-800">Dashboard Absensi Guru Berbasis Lokasi</h1>
        </div>
 
        <div className="flex gap-3">
