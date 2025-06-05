@@ -245,10 +245,10 @@ export default function TeacherAttendanceTable() {
             <p className="text-gray-500 mb-6" data-unique-id="6a4f20fe-902c-46f2-9431-c870f8651b17" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx" data-dynamic-text="true">
               {searchQuery || typeFilter !== "all" || statusFilter !== "all" ? "Tidak ada data absensi yang sesuai dengan filter" : "Tidak ada data absensi pada tanggal yang dipilih"}
             </p>
-            <Link href="/dashboard/absensi-guru/scan" className="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-primary hover:bg-opacity-90 transition-colors" data-unique-id="be8c7446-132c-4f34-8fd8-ad8e251a9999" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
+            {/*<Link href="/dashboard/absensi-guru/scan" className="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-primary hover:bg-opacity-90 transition-colors" data-unique-id="be8c7446-132c-4f34-8fd8-ad8e251a9999" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
               <Camera size={18} /><span className="editable-text" data-unique-id="d8e07079-0e93-4398-be67-ba270691d71e" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
               Lakukan Absensi
-            </span></Link>
+            </span></Link>*/}
           </div>
         </div>}
     </div>;
