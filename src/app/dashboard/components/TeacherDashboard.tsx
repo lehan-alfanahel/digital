@@ -256,8 +256,8 @@ export default function TeacherDashboard({
            </div>
          </div>
          {/* Stats Cards */}
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-2 border border-blue-200">
              <div className="flex items-center gap-3 mb-2">
                <div className="bg-blue-100 p-2 rounded-lg">
                  <Users className="h-5 w-5 text-blue-600" />
@@ -267,10 +267,10 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-1xl font-bold text-blue-600">{localStats.totalStudents} Siswa</p>
+               <p className="text-1xl text-center font-bold text-blue-600">{localStats.totalStudents} Siswa</p>
              )}
            </div>
-           <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+           <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-2 border border-green-200">
              <div className="flex items-center gap-3 mb-2">
                <div className="bg-green-100 p-2 rounded-lg">
                  <BookOpen className="h-5 w-5 text-green-600" />
@@ -280,10 +280,10 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-1xl font-bold text-green-600">{localStats.totalClasses} Kelas</p>
+               <p className="text-1xl text-center font-bold text-green-600">{localStats.totalClasses} Kelas</p>
              )}
            </div>
-           <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
+           <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-2 border border-purple-200">
              <div className="flex items-center gap-3 mb-2">
                <div className="bg-purple-100 p-2 rounded-lg">
                  <BarChart2 className="h-5 w-5 text-purple-600" />
@@ -293,10 +293,10 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-1xl font-bold text-purple-600">{localStats.attendanceRate}% Persen</p>
+               <p className="text-1xl text-center font-bold text-purple-600">{localStats.attendanceRate}% Persen</p>
              )}
            </div>
-           <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
+           <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-2 border border-orange-200">
              <div className="flex items-center gap-3 mb-2">
                <div className="bg-orange-100 p-2 rounded-lg">
                  <CheckCircle className="h-5 w-5 text-orange-600" />
@@ -306,7 +306,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-1xl font-bold text-orange-600">{attendanceStats.present} Siswa</p>
+               <p className="text-1xl text-center font-bold text-orange-600">{attendanceStats.present} Siswa</p>
              )}
            </div>
          </div>
