@@ -213,7 +213,7 @@ export default function TeacherDashboard({
      {/* Dashboard Popups Component */}
      <DashboardPopups schoolId={schoolId} userRole={userRole} />
      {/* Greeting Section */}
-     <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-6 mb-6 rounded-xl shadow-lg">
+     {/*<div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-6 mb-6 rounded-xl shadow-lg">
        <div className="flex items-center">
          <div className="bg-white/20 p-3 rounded-full mr-4">
            <UserCheck className="h-8 w-8 text-white" />
@@ -230,7 +230,7 @@ export default function TeacherDashboard({
            </p>
          </div>
        </div>
-     </div>
+     </div>*/}
      {/* Dashboard content */}
      {showDynamicDashboard ? (
        // Dynamic Dashboard
@@ -267,7 +267,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-blue-600">{localStats.totalStudents}</p>
+               <p className="text-2xl font-bold text-blue-600">{localStats.totalStudents} Siswa</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
@@ -280,7 +280,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-green-600">{localStats.totalClasses}</p>
+               <p className="text-2xl font-bold text-green-600">{localStats.totalClasses} Kelas</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
@@ -293,7 +293,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-purple-600">{localStats.attendanceRate}%</p>
+               <p className="text-2xl font-bold text-purple-600">{localStats.attendanceRate}% Persen</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
@@ -306,7 +306,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-orange-600">{attendanceStats.present}</p>
+               <p className="text-2xl font-bold text-orange-600">{attendanceStats.present} Siswa</p>
              )}
            </div>
          </div>
