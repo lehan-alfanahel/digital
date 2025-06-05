@@ -58,8 +58,8 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
        if (!lastCheck || now - parseInt(lastCheck) > 24 * 60 * 60 * 1000) {
          const newAnnouncements: AnnouncementData[] = [{
            id: '1',
-           title: 'Pembaruan Sistem Absensi',
-           message: 'Sistem absensi telah diperbarui dengan fitur baru. Silakan login ulang untuk mendapatkan pengalaman terbaik.',
+           title: 'Absensi Guru Berbasis Lokasi',
+           message: 'Untuk menggunakan Absensi berbasis lokasi, jangan lupa untuk menyalakan GPS pada Smartphone. Khusus jenis Absensi Izin dan Alpha bisa dilakukan dari rumah.',
            type: 'info',
            priority: 'medium',
            createdAt: new Date(),
@@ -260,7 +260,7 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
                      <Bell className="h-6 w-6 text-white" />
                    </motion.div>
                    <div>
-                     <h2 className="text-xl font-bold text-white">SELAMAT DATANG</h2>
+                     <h2 className="text-xl font-bold text-white">PENGUMUMAN</h2>
                      <p className="text-sm text-white">
                        
                      </p>
@@ -268,15 +268,15 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
                  </div>
                  <button
                    onClick={dismissAnnouncement}
-                   className="text-gray-500 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+                   className="text-white hover:text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
                  >
                    <X className="h-5 w-5" />
                  </button>
                </div>
              </div>
              {/* Content */}
-             <div className="p-6">
-               <div className="flex items-start space-x-3 mb-4">
+             <div className="p-4">
+               <div className="flex items-start space-x-3 mb-0">
                  {/*{getAnnouncementIcon(announcements[currentAnnouncementIndex].type)}*/}
                  <div className="flex-1">
                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
