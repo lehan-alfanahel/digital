@@ -563,7 +563,7 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
      <div className="fixed bottom-6 right-6 flex flex-col space-y-3 z-40">
        {/* Announcement Button */}
        {announcements.length > 0 && (
-         <motion.button
+         {/* <motion.button
            initial={{ scale: 0 }}
            animate={{ scale: 1 }}
            whileHover={{ scale: 1.1 }}
@@ -577,7 +577,7 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
                {announcements.length}
              </span>
            )}
-         </motion.button>
+         </motion.button>*/}
        )}
        {/* Admin Expiration Button */}
        {expirationData && userRole === 'admin' && (
