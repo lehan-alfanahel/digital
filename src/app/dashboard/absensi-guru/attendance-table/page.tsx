@@ -183,13 +183,13 @@ export default function TeacherAttendanceTable() {
           </div>
         </div>
         
-        <div className="flex justify-end mt-4" data-unique-id="7ac72ffb-9a7e-405a-9770-329024970ff0" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
+        {/*<div className="flex justify-end mt-4" data-unique-id="7ac72ffb-9a7e-405a-9770-329024970ff0" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
           <button onClick={exportData} className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" disabled={filteredRecords.length === 0} data-unique-id="296ac4e9-552e-44f9-b1f9-9ba13574d26f" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
             <Download size={18} /><span className="editable-text" data-unique-id="31f2fc49-05d0-4957-9550-029e4617493b" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
             Export CSV
           </span></button>
         </div>
-      </div>
+      </div>*/}
       
       {/* Attendance Table */}
       {loading ? <div className="flex justify-center items-center h-64" data-unique-id="023ceacb-810c-4263-ab73-1e053262e5eb" data-file-name="app/dashboard/absensi-guru/attendance-table/page.tsx">
