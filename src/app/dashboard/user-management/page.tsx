@@ -631,7 +631,7 @@ export default function UserManagement() {
                  <div className="space-y-4">
                    <div className="flex items-center justify-between">
                      <h3 className="text-lg font-semibold text-gray-800">
-                       Preview Data Import ({importData.length} pengguna)
+                       Preview Data Import ({importData.length} Pengguna)
                      </h3>
                      <button
                        onClick={() => {
@@ -708,16 +708,16 @@ export default function UserManagement() {
                        <AlertCircle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
                        <div>
                          <p className="text-sm font-medium text-yellow-800">
-                           Informasi Penting
+                           Informasi Penting !!!
                          </p>
                          <p className="text-sm text-yellow-700 mt-1">
-                           • Password default untuk semua pengguna: <strong>User123!</strong>
+                           • Password default untuk semua pengguna : <strong>User123!</strong>
                          </p>
                          <p className="text-sm text-yellow-700">
-                           • Pengguna dapat mengubah password setelah login pertama
+                           • Pengguna dapat mengubah password setelah login pertama.
                          </p>
                          <p className="text-sm text-yellow-700">
-                           • Data yang diimpor akan langsung ditambahkan ke database
+                           • Data yang diimport akan langsung ditambahkan ke database.
                          </p>
                        </div>
                      </div>
@@ -726,7 +726,7 @@ export default function UserManagement() {
                )}
              </div>
              {/* Footer */}
-             <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
+             <div className="bg-gray-50 px-6 py-2 flex justify-end space-x-3">
                <button
                  onClick={() => {
                    setShowImportModal(false);
