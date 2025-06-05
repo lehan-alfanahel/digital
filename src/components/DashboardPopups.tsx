@@ -257,18 +257,18 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
                      transition={{ repeat: Infinity, duration: 2 }}
                      className="bg-white/20 p-2 rounded-lg"
                    >
-                     <Bell className="h-6 w-6 text-gray-700" />
+                     <Bell className="h-6 w-6 text-white" />
                    </motion.div>
                    <div>
-                     <h2 className="text-lg font-bold text-gray-800">SELAMAT DATANG</h2>
-                     <p className="text-sm text-gray-600">
+                     <h2 className="text-xl font-bold text-white">SELAMAT DATANG</h2>
+                     <p className="text-sm text-white">
                        
                      </p>
                    </div>
                  </div>
                  <button
                    onClick={dismissAnnouncement}
-                   className="text-gray-500 hover:text-gray-700 hover:bg-white/20 p-2 rounded-lg transition-colors"
+                   className="text-gray-500 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
                  >
                    <X className="h-5 w-5" />
                  </button>
@@ -277,7 +277,7 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
              {/* Content */}
              <div className="p-6">
                <div className="flex items-start space-x-3 mb-4">
-                 {getAnnouncementIcon(announcements[currentAnnouncementIndex].type)}
+                 {/*{getAnnouncementIcon(announcements[currentAnnouncementIndex].type)}*/}
                  <div className="flex-1">
                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
                      {announcements[currentAnnouncementIndex].title}
@@ -306,13 +306,13 @@ export default function DashboardPopups({ schoolId, userRole, userEmail }: Dashb
                  onClick={dismissAnnouncement}
                  className="text-gray-500 hover:text-gray-700 font-medium"
                >
-                 Tutup Semua
+                 
                </button>
                <button
                  onClick={nextAnnouncement}
                  className="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                >
-                 {currentAnnouncementIndex < announcements.length - 1 ? 'Selanjutnya' : 'Selesai'}
+                 {currentAnnouncementIndex < announcements.length - 1 ? 'Selanjutnya' : 'Saya Mengerti'}
                </button>
              </div>
            </motion.div>
