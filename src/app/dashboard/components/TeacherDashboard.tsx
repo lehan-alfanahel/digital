@@ -267,7 +267,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-blue-600">{localStats.totalStudents} Siswa</p>
+               <p className="text-1xl font-bold text-blue-600">{localStats.totalStudents} Siswa</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
@@ -280,7 +280,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-green-600">{localStats.totalClasses} Kelas</p>
+               <p className="text-1xl font-bold text-green-600">{localStats.totalClasses} Kelas</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
@@ -293,7 +293,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-purple-600">{localStats.attendanceRate}% Persen</p>
+               <p className="text-1xl font-bold text-purple-600">{localStats.attendanceRate}% Persen</p>
              )}
            </div>
            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
@@ -306,7 +306,7 @@ export default function TeacherDashboard({
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
              ) : (
-               <p className="text-2xl font-bold text-orange-600">{attendanceStats.present} Siswa</p>
+               <p className="text-1xl font-bold text-orange-600">{attendanceStats.present} Siswa</p>
              )}
            </div>
          </div>
