@@ -201,7 +201,7 @@ export default function UserManagement() {
      for (const userData of importData) {
        try {
          // Generate default password
-         const defaultPassword = 'User123!';
+         const defaultPassword = '12345678';
 
          // Create user with Firebase Auth
          const userCredential = await createUserWithEmailAndPassword(
@@ -711,11 +711,9 @@ export default function UserManagement() {
                            Informasi Penting !!!
                          </p>
                          <p className="text-sm text-yellow-700 mt-1">
-                           • Password default untuk semua pengguna : <strong>User123!</strong>
+                           • Password default untuk semua pengguna : <strong>12345678</strong>
                          </p>
-                         <p className="text-sm text-yellow-700">
-                           • Pengguna dapat mengubah password setelah login pertama.
-                         </p>
+                         
                          <p className="text-sm text-yellow-700">
                            • Data yang diimport akan langsung ditambahkan ke database.
                          </p>
