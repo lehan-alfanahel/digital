@@ -546,7 +546,7 @@ export default function UserManagement() {
                  <div className="space-y-6">
                    {/* Download Template Section */}
                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
-                     <div className="flex flex-col items-center mb-1 justify-between">
+                     <div className="flex-col items-center mb-1 justify-between">
                        <div>
                          <h3 className="text-lg font-semibold text-blue-800 mb-2">
                            Langkah 1 : Download Template
@@ -560,13 +560,13 @@ export default function UserManagement() {
                            <p>• Kolom 3 : HAK AKSES (admin/teacher/student)</p>
                          </div>
                        </div>
-                       <button
+                       <center><button
                          onClick={downloadTemplate}
                          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                        >
                          <Download size={16} />
                          Download Template Excel
-                       </button>
+                       </button></center>
                      </div>
                    </div>
                    {/* Upload Section */}
