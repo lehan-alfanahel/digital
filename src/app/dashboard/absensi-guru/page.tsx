@@ -108,10 +108,10 @@ export default function AbsensiGuruPage() {
     return new Date(dateStr).toLocaleDateString('id-ID', options);
   };
   return <div className="pb-20 md:pb-6" data-unique-id="74f1c604-0e5e-46c1-be32-3294f28c09f9" data-file-name="app/dashboard/absensi-guru/page.tsx" data-dynamic-text="true">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6" data-unique-id="d6b54cf9-3dbe-40ec-b76e-f44ad2d42c09" data-file-name="app/dashboard/absensi-guru/page.tsx">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-3" data-unique-id="d6b54cf9-3dbe-40ec-b76e-f44ad2d42c09" data-file-name="app/dashboard/absensi-guru/page.tsx">
         <div className="flex items-center mb-4 md:mb-0" data-unique-id="980e9e79-7798-476c-b65f-67eea459dd92" data-file-name="app/dashboard/absensi-guru/page.tsx">
           <Users className="h-7 w-7 text-primary mr-3" />
-          <h1 className="text-2xl font-bold text-gray-800" data-unique-id="9e495e71-14fd-4811-a41b-5bc031f9feb0" data-file-name="app/dashboard/absensi-guru/page.tsx"><span className="editable-text" data-unique-id="0a5aae34-6688-456c-aa73-114bfb592a28" data-file-name="app/dashboard/absensi-guru/page.tsx">Absensi Guru & Tenaga Kependidikan</span></h1>
+          <h1 className="text-2xl font-bold text-gray-800" data-unique-id="9e495e71-14fd-4811-a41b-5bc031f9feb0" data-file-name="app/dashboard/absensi-guru/page.tsx"><span className="editable-text" data-unique-id="0a5aae34-6688-456c-aa73-114bfb592a28" data-file-name="app/dashboard/absensi-guru/page.tsx">Dashboard Absensi Guru</span></h1>
         </div>
         
         <div className="flex gap-3" data-unique-id="dbcaac45-2eda-44b4-9fd3-b62232a92324" data-file-name="app/dashboard/absensi-guru/page.tsx">
@@ -207,7 +207,7 @@ export default function AbsensiGuruPage() {
           
           {/* Recent Attendance */}
           <div className="bg-white rounded-xl shadow-sm overflow-hidden" data-unique-id="8c974303-3cb7-4960-8c00-0f2aee858ee6" data-file-name="app/dashboard/absensi-guru/page.tsx" data-dynamic-text="true">
-            <div className="p-6 border-b border-gray-100" data-unique-id="4bfffb5d-7df6-4f08-983b-79127a50cee4" data-file-name="app/dashboard/absensi-guru/page.tsx">
+            <div className="p-3 border-b border-gray-100" data-unique-id="4bfffb5d-7df6-4f08-983b-79127a50cee4" data-file-name="app/dashboard/absensi-guru/page.tsx">
               <h2 className="text-lg font-semibold flex items-center" data-unique-id="5460e655-a392-4880-b668-1677c52736f0" data-file-name="app/dashboard/absensi-guru/page.tsx">
                 <History className="h-5 w-5 text-primary mr-2" />
                 <span className="editable-text" data-unique-id="02ceaa5b-9647-4010-aef6-cdd2b4d4c368" data-file-name="app/dashboard/absensi-guru/page.tsx">Riwayat Absensi Terbaru</span>
@@ -261,7 +261,7 @@ export default function AbsensiGuruPage() {
           </div>
 
 {/* Quick Access */}
-          <div className="bg-white rounded-xl shadow-sm p-6 mb-6" data-unique-id="6d68b07e-ed09-4f31-8cb7-b7c50c4c011f" data-file-name="app/dashboard/absensi-guru/page.tsx">
+          <div className="bg-white rounded-xl shadow-sm p-3 mb-6 mt-6" data-unique-id="6d68b07e-ed09-4f31-8cb7-b7c50c4c011f" data-file-name="app/dashboard/absensi-guru/page.tsx">
             <h2 className="text-lg font-semibold mb-4 flex items-center" data-unique-id="14582cc2-b3c2-4d80-9a58-40babe5d4efc" data-file-name="app/dashboard/absensi-guru/page.tsx">
               <Zap className="h-5 w-5 text-primary mr-2" />
               <span className="editable-text" data-unique-id="93574865-2592-4298-89d4-93290fdf2f52" data-file-name="app/dashboard/absensi-guru/page.tsx">Akses Cepat Admin</span>
