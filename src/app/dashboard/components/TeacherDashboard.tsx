@@ -185,7 +185,7 @@ export default function TeacherDashboard({
        {/* Basic Navigation */}
        <div className="bg-white rounded-xl shadow-sm p-6">
          <h2 className="text-lg font-semibold mb-4">Akses Cepat</h2>
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 md:gap-4">
+         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
            <Link href="/dashboard/scan" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
              <div className="flex flex-col items-center justify-center">
                <div className="bg-[#4361EE] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
@@ -256,13 +256,13 @@ export default function TeacherDashboard({
            </div>
          </div>
          {/* Stats Cards */}
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-2 border border-blue-200">
              <div className="flex items-center gap-3 mb-2">
                <div className="bg-blue-100 p-2 rounded-lg">
                  <Users className="h-5 w-5 text-blue-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Total Semua Siswa</h3>
+               <h3 className="text-sm font-medium text-gray-600">Total Semua Siswa</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
@@ -275,7 +275,7 @@ export default function TeacherDashboard({
                <div className="bg-green-100 p-2 rounded-lg">
                  <BookOpen className="h-5 w-5 text-green-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Total Semua Kelas</h3>
+               <h3 className="text-sm font-medium text-gray-600">Total Semua Kelas</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
@@ -288,7 +288,7 @@ export default function TeacherDashboard({
                <div className="bg-purple-100 p-2 rounded-lg">
                  <BarChart2 className="h-5 w-5 text-purple-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Tingkat Kehadiran</h3>
+               <h3 className="text-sm font-medium text-gray-600">Tingkat Kehadiran</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
@@ -301,7 +301,7 @@ export default function TeacherDashboard({
                <div className="bg-orange-100 p-2 rounded-lg">
                  <CheckCircle className="h-5 w-5 text-orange-600" />
                </div>
-               <h3 className="text-sm font-medium text-gray-700">Total Siswa Hadir Hari Ini</h3>
+               <h3 className="text-sm font-medium text-gray-600">Total Siswa Hadir Hari Ini</h3>
              </div>
              {localLoading ? (
                <div className="animate-pulse h-8 bg-gray-200 rounded w-16"></div>
