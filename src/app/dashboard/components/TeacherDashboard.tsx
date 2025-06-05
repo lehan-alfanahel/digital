@@ -189,18 +189,18 @@ export default function TeacherDashboard({
            <Link href="/dashboard/scan" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
              <div className="flex flex-col items-center justify-center">
                <div className="bg-[#4361EE] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                 <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                 <QrCode className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                </div>
-               <h3 className="font-medium text-white text-center text-xs sm:text-sm">Scan QR Code</h3>
+               <h3 className="font-medium text-white text-center text-sm sm:text-sm">Scan QR Code</h3>
              </div>
            </Link>
 
            <Link href="/dashboard/students/qr" className="bg-[#F72585] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
              <div className="flex flex-col items-center justify-center">
                <div className="bg-[#F72585] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                 <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                 <QrCode className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                </div>
-               <h3 className="font-medium text-white text-center text-xs sm:text-sm">QR Code Siswa</h3>
+               <h3 className="font-medium text-white text-center text-sm sm:text-sm">QR Code Siswa</h3>
              </div>
            </Link>
          </div>
@@ -323,53 +323,53 @@ export default function TeacherDashboard({
              <Link href="/dashboard/scan" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#4361EE] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                   <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                   <QrCode className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-xs sm:text-sm">Scan QR Code</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Scan QR Code</h3>
                </div>
              </Link>
 
              <Link href="/dashboard/students/qr" className="bg-[#F72585] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#F72585] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                   <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                   <QrCode className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-xs sm:text-sm">QR Code Siswa</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">QR Code Siswa</h3>
                </div>
              </Link>
 
              <Link href="/dashboard/reports" className="bg-[#21A366] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#21A366] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                   <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                   <FileText className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-xs sm:text-sm">Laporan</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Laporan</h3>
                </div>
              </Link>
 
              <Link href="/dashboard/students" className="bg-[#F77F00] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#F77F00] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                   <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                   <Users className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-xs sm:text-sm">Daftar Siswa</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Daftar Siswa</h3>
                </div>
              </Link>
              <Link href="/dashboard/absensi-guru/scan" className="bg-[#7B2CBF] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#7B2CBF] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                   <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                   <QrCode className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-xs sm:text-sm">Scan Absensi Guru</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Scan Absensi Guru</h3>
                </div>
              </Link>
 
-             <Link href="/dashboard/absensi-guru/reports" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
+             <Link href="/dashboard/profile-usere" className="bg-[#4361EE] rounded-xl shadow-sm p-4 sm:p-5 hover:shadow-md transition-all">
                <div className="flex flex-col items-center justify-center">
                  <div className="bg-[#4361EE] bg-opacity-20 p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                   <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                   <FileText className="h-6 w-6 sm:h-6 sm:w-6 text-white" />
                  </div>
-                 <h3 className="font-medium text-white text-center text-xs sm:text-sm">Laporan Absensi Guru</h3>
+                 <h3 className="font-medium text-white text-center text-sm sm:text-sm">Profile Saya</h3>
                </div>
              </Link>
            </div>
