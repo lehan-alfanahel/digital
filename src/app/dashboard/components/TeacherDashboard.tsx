@@ -256,7 +256,7 @@ export default function TeacherDashboard({
            </div>
          </div>
          {/* Stats Cards */}
-         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
              <div className="flex items-center gap-3 mb-2">
                <div className="bg-blue-100 p-2 rounded-lg">
