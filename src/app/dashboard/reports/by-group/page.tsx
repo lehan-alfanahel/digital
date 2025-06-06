@@ -530,7 +530,7 @@ export default function GroupAttendanceReport() {
                  <thead className="bg-green-100 border-b-2 border-green-200">
                    <tr>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">NO.</th>
-                     <th className="text-gray-700 border border-gray-300 px-12 sm:px-4 py-3 text-left font-bold text-xs sm:text-sm">NAMA SISWA</th>
+                     <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-left font-bold text-xs sm:text-sm">NAMA SISWA</th>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">NISN</th>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">KELAS</th>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">HADIR</th>
@@ -544,7 +544,7 @@ export default function GroupAttendanceReport() {
                    {students.map((student, index) => (
                      <tr key={student.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm">{index + 1}</td>
-                       <td className="text-gray-700 border border-gray-300 px-12 sm:px-4 py-2 text-xs sm:text-sm font-medium">{student.name}</td>
+                       <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium">{student.name}</td>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm">{student.nisn}</td>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm font-medium">{student.class}</td>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm font-semibold text-green-600">{student.hadir}</td>
@@ -592,7 +592,7 @@ export default function GroupAttendanceReport() {
      </div>
      {/* Download Buttons */}
      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 pb-20 sm:pb-0">
-       <button
+       <button target="_blank"
          onClick={handleDownloadPDF}
          disabled={isDownloading || students.length === 0}
          className="flex items-center justify-center gap-2 sm:gap-3 bg-red-600 text-white p-3 sm:p-4 rounded-lg hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
