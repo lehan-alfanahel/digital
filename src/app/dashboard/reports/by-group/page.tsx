@@ -174,24 +174,24 @@ export default function GroupAttendanceReport() {
      doc.setFontSize(12);
      doc.setFont("helvetica", "normal");
      doc.text(schoolInfo.address, pageWidth / 2, margin + 12, { align: "center" });
-     doc.text(`NPSN: ${schoolInfo.npsn}`, pageWidth / 2, margin + 18, { align: "center" });
+     doc.text(`NPSN ${schoolInfo.npsn}`, pageWidth / 2, margin + 18, { align: "center" });
      // Horizontal line
      doc.setLineWidth(0.5);
      doc.line(margin, margin + 22, pageWidth - margin, margin + 22);
      // Add report title and class information
      doc.setFontSize(14);
-     doc.setFont("helvetica", "bold");
+     doc.setFont("helvetica", "normal");
      doc.text("REKAPITULASI LAPORAN ABSENSI SISWA", pageWidth / 2, margin + 30, { align: "center" });
      doc.setFontSize(12);
      doc.setFont("helvetica", "normal");
-     doc.text(`KELAS: ${selectedClass === "all" ? "SEMUA KELAS" : selectedClass.toUpperCase()}`, pageWidth / 2, margin + 36, { align: "center" });
+     doc.text(`KELAS ${selectedClass === "all" ? "SEMUA KELAS" : selectedClass.toUpperCase()}`, pageWidth / 2, margin + 36, { align: "center" });
      // Add date range
      const startDate = format(new Date(dateRange.start), "d MMMM yyyy", { locale: id });
      const endDate = format(new Date(dateRange.end), "d MMMM yyyy", { locale: id });
-     doc.text(`Periode: ${startDate} - ${endDate}`, pageWidth / 2, margin + 42, { align: "center" });
+     doc.text(`Periode ${startDate} - ${endDate}`, pageWidth / 2, margin + 42, { align: "center" });
      // Draw table headers
      const headers = ["NO.", "NAMA SISWA", "NISN", "KELAS", "HADIR", "SAKIT", "IZIN", "ALPHA", "TOTAL"];
-     const colWidths = [15, 70, 35, 25, 20, 20, 20, 20, 25];
+     const colWidths = [15, 70, 35, 25, 20, 20, 20, 20, 20];
      let yPos = margin + 52;
      // Draw header row with light blue background
      doc.setFillColor(173, 216, 230); // Light blue
@@ -222,13 +222,13 @@ export default function GroupAttendanceReport() {
        if (yPos > pageHeight - margin - 50) {
          doc.addPage();
          // Redraw header on new page
-         doc.setFont("helvetica", "bold");
-         doc.setFontSize(14);
-         doc.text(schoolInfo.name.toUpperCase(), pageWidth / 2, margin + 5, { align: "center" });
-         doc.setFontSize(10);
-         doc.setFont("helvetica", "normal");
-         doc.text("(Lanjutan)", pageWidth / 2, margin + 12, { align: "center" });
-         yPos = margin + 25;
+         //doc.setFont("helvetica", "bold");
+         //doc.setFontSize(14);
+         //doc.text(schoolInfo.name.toUpperCase(), pageWidth / 2, margin + 5, { align: "center" });
+         //doc.setFontSize(10);
+         //doc.setFont("helvetica", "normal");
+         //doc.text("(Lanjutan)", pageWidth / 2, margin + 12, { align: "center" });
+         //yPos = margin + 25;
          // Redraw table header
          doc.setFillColor(173, 216, 230);
          doc.rect(margin, yPos, contentWidth, 10, "F");
@@ -316,13 +316,13 @@ export default function GroupAttendanceReport() {
      doc.setFont("helvetica", "normal");
      doc.setFontSize(10);
      const signatureWidth = (pageWidth - margin * 2) / 2;
-     doc.text("Mengetahui,", margin + signatureWidth * 0.25, yPos + 10, { align: "center" });
-     doc.text("Administrator", margin + signatureWidth * 1.75, yPos + 10, { align: "center" });
-     doc.text("Kepala Sekolah", margin + signatureWidth * 0.25, yPos + 16, { align: "center" });
-     doc.text("Pengelola Data", margin + signatureWidth * 1.75, yPos + 16, { align: "center" });
+     doc.text("Mengetahui", margin + signatureWidth * 0.25, yPos + 10, { align: "center" });
+     doc.text("Administrator Sekolah", margin + signatureWidth * 1.75, yPos + 10, { align: "center" });
+     doc.text("Kepala Sekolah,", margin + signatureWidth * 0.25, yPos + 16, { align: "center" });
+     doc.text("Absensi Digital Sekolah,", margin + signatureWidth * 1.75, yPos + 16, { align: "center" });
      doc.setFont("helvetica", "bold");
      doc.text(schoolInfo.principalName || "________________", margin + signatureWidth * 0.25, yPos + 35, { align: "center" });
-     doc.text("Administrator", margin + signatureWidth * 1.75, yPos + 35, { align: "center" });
+     doc.text("...............................r", margin + signatureWidth * 1.75, yPos + 35, { align: "center" });
      doc.setFont("helvetica", "normal");
      doc.text(`NIP. ${schoolInfo.principalNip || "_______________"}`, margin + signatureWidth * 0.25, yPos + 41, { align: "center" });
      doc.text("NIP. _______________", margin + signatureWidth * 1.75, yPos + 41, { align: "center" });
