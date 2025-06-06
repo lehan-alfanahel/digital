@@ -191,7 +191,7 @@ export default function GroupAttendanceReport() {
      doc.text(`Periode ${startDate} - ${endDate}`, pageWidth / 2, margin + 42, { align: "center" });
      // Draw table headers
      const headers = ["NO.", "NAMA SISWA", "NISN", "KELAS", "HADIR", "SAKIT", "IZIN", "ALPHA", "TOTAL"];
-     const colWidths = [12, 55, 25, 15, 18, 18, 18, 18, 20];
+     const colWidths = [10, 50, 25, 16, 16, 16, 16, 16, 16];
      let yPos = margin + 52;
      // Draw header row with light blue background
      doc.setFillColor(173, 216, 230); // Light blue
