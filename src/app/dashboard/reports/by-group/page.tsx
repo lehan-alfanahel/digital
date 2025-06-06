@@ -322,7 +322,7 @@ export default function GroupAttendanceReport() {
      doc.text("Absensi Digital Sekolah,", margin + signatureWidth * 1.75, yPos + 16, { align: "center" });
      doc.setFont("helvetica", "bold");
      doc.text(schoolInfo.principalName || "________________", margin + signatureWidth * 0.25, yPos + 35, { align: "center" });
-     doc.text("...............................r", margin + signatureWidth * 1.75, yPos + 35, { align: "center" });
+     doc.text("...............................", margin + signatureWidth * 1.75, yPos + 35, { align: "center" });
      doc.setFont("helvetica", "normal");
      doc.text(`NIP. ${schoolInfo.principalNip || "_______________"}`, margin + signatureWidth * 0.25, yPos + 41, { align: "center" });
      doc.text("NIP. _______________", margin + signatureWidth * 1.75, yPos + 41, { align: "center" });
