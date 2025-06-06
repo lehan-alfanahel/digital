@@ -157,7 +157,7 @@ export default function GroupAttendanceReport() {
    try {
      // Create PDF document
      const doc = new jsPDF({
-       orientation: "landscape",
+       orientation: "portrait",
        unit: "mm",
        format: "a4"
      });
@@ -233,7 +233,7 @@ export default function GroupAttendanceReport() {
 
         
          doc.setFont("helvetica", "normal");
-         doc.text("(Lanjutan)", pageWidth / 2, margin + 12, { align: "center" });
+         doc.text("", pageWidth / 2, margin + 12, { align: "center" });
          yPos = margin + 25;
          // Redraw table header
          doc.setFillColor(173, 216, 230);
