@@ -191,7 +191,7 @@ export default function GroupAttendanceReport() {
      doc.text(`Periode ${startDate} - ${endDate}`, pageWidth / 2, margin + 42, { align: "center" });
      // Draw table headers
      const headers = ["NO.", "NAMA SISWA", "NISN", "KELAS", "HADIR", "SAKIT", "IZIN", "ALPHA", "TOTAL"];
-     const colWidths = [15, 70, 35, 25, 20, 20, 20, 20, 20];
+     const colWidths = [15, 70, 35, 25, 20, 20, 20, 20, 30];
      let yPos = margin + 52;
      // Draw header row with light blue background
      doc.setFillColor(173, 216, 230); // Light blue
@@ -222,13 +222,19 @@ export default function GroupAttendanceReport() {
        if (yPos > pageHeight - margin - 50) {
          doc.addPage();
          // Redraw header on new page
-         //doc.setFont("helvetica", "bold");
-         //doc.setFontSize(14);
-         //doc.text(schoolInfo.name.toUpperCase(), pageWidth / 2, margin + 5, { align: "center" });
-         //doc.setFontSize(10);
-         //doc.setFont("helvetica", "normal");
-         //doc.text("(Lanjutan)", pageWidth / 2, margin + 12, { align: "center" });
-         //yPos = margin + 25;
+         doc.setFont("helvetica", "bold");
+         doc.setFontSize(14);
+         doc.text(schoolInfo.name.toUpperCase(), pageWidth / 2, margin + 5, { align: "center" });
+         doc.setFontSize(10);
+
+         doc.setFont("helvetica", "normal");
+         doc.text(schoolInfo.address, pageWidth / 2, margin + 12, { align: "center" });
+         doc.text(`NPSN ${schoolInfo.npsn}`, pageWidth / 2, margin + 18, { align: "center" });
+
+        
+         doc.setFont("helvetica", "normal");
+         doc.text("(Lanjutan)", pageWidth / 2, margin + 12, { align: "center" });
+         yPos = margin + 25;
          // Redraw table header
          doc.setFillColor(173, 216, 230);
          doc.rect(margin, yPos, contentWidth, 10, "F");
