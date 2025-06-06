@@ -409,7 +409,7 @@ export default function UserManagement() {
            className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors shadow-sm"
          >
            <Upload size={18} />
-           Import dengan Excel
+           Import Dengan Excel
          </button>
        </div>
      </div>
