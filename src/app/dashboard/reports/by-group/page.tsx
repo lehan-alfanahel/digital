@@ -191,7 +191,7 @@ export default function GroupAttendanceReport() {
      doc.text(`Periode ${startDate} - ${endDate}`, pageWidth / 2, margin + 42, { align: "center" });
      // Draw table headers
      const headers = ["NO.", "NAMA SISWA", "NISN", "KELAS", "HADIR", "SAKIT", "IZIN", "ALPHA", "TOTAL"];
-     const colWidths = [10, 50, 25, 16, 16, 16, 16, 16, 16];
+     const colWidths = [10, 50, 25, 16, 16, 16, 14, 16, 18];
      let yPos = margin + 52;
      // Draw header row with light blue background
      doc.setFillColor(173, 216, 230); // Light blue
@@ -530,7 +530,7 @@ export default function GroupAttendanceReport() {
                  <thead className="bg-green-100 border-b-2 border-green-200">
                    <tr>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">NO.</th>
-                     <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-left font-bold text-xs sm:text-sm">NAMA SISWA</th>
+                     <th className="text-gray-700 border border-gray-300 px-12 sm:px-4 py-3 text-left font-bold text-xs sm:text-sm">NAMA SISWA</th>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">NISN</th>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">KELAS</th>
                      <th className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-3 text-center font-bold text-xs sm:text-sm">HADIR</th>
@@ -544,7 +544,7 @@ export default function GroupAttendanceReport() {
                    {students.map((student, index) => (
                      <tr key={student.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm">{index + 1}</td>
-                       <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium">{student.name}</td>
+                       <td className="text-gray-700 border border-gray-300 px-12 sm:px-4 py-2 text-xs sm:text-sm font-medium">{student.name}</td>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm">{student.nisn}</td>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm font-medium">{student.class}</td>
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm font-semibold text-green-600">{student.hadir}</td>
