@@ -305,7 +305,7 @@ export default function TeacherDataPage() {
     }
   };
   return <div className="pb-20 md:pb-6" data-unique-id="aea7ed76-67fa-4577-8ee4-eb332f956d20" data-file-name="app/dashboard/absensi-guru/data/page.tsx" data-dynamic-text="true">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6" data-unique-id="77465f9a-a5f3-4527-8be7-430d02387ee2" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-0" data-unique-id="77465f9a-a5f3-4527-8be7-430d02387ee2" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
         <div className="flex items-center mb-4 md:mb-0" data-unique-id="c2b2ec83-8982-425f-a9c9-d9968ac7665b" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
           <Link href="/dashboard/absensi-guru" className="p-2 mr-2 hover:bg-gray-100 rounded-full" data-unique-id="f3e53a66-5b09-44fd-9630-a0431a6b94d8" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
             <ArrowLeft size={20} />
@@ -320,13 +320,13 @@ export default function TeacherDataPage() {
       </div>
       
       {/* Search and Filter */}
-      <div className="bg-white rounded-xl shadow-sm p-4 mb-6" data-unique-id="dce44a1d-dbf2-4517-b3e9-9ff61eea956f" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+      <div className="bg-white rounded-xl shadow-sm p-4 mb-4" data-unique-id="dce44a1d-dbf2-4517-b3e9-9ff61eea956f" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4" data-unique-id="4b62e445-b0a3-4ef2-a72d-f55eef73d16a" data-file-name="app/dashboard/absensi-guru/data/page.tsx" data-dynamic-text="true">
           {/* Search */}
           <div className="md:col-span-2" data-unique-id="a3aba4f4-6b93-46ff-a985-d60eac5a6a9e" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
             <div className="relative" data-unique-id="01fb57b8-ee9d-40e3-9bdc-8733d21aff66" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-              <input type="text" placeholder="Cari nama, NIK, atau email..." className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} data-unique-id="eab7d619-a869-454c-baff-6f04405611a5" data-file-name="app/dashboard/absensi-guru/data/page.tsx" />
+              <input type="text" placeholder="Cari Nama, NIK, atau email..." className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} data-unique-id="eab7d619-a869-454c-baff-6f04405611a5" data-file-name="app/dashboard/absensi-guru/data/page.tsx" />
             </div>
           </div>
           
@@ -355,7 +355,7 @@ export default function TeacherDataPage() {
                   <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="c0896649-dbde-4777-bb15-e9894227cea7" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="b96d650a-368e-418d-bad7-16c0a770a77f" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Nama</span></th>
                   <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="a2fef97c-10c7-4df2-9a26-4ec93a791431" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="cbafd7eb-3acd-4f08-9f38-6d042545ed50" data-file-name="app/dashboard/absensi-guru/data/page.tsx">NIK</span></th>
                   <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="859d80a7-2bca-48e3-bdba-bf4fe44a4865" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="16ad8ca7-d128-4132-9416-e2d306ef90f8" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Jabatan</span></th>
-                  <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="1e17b8f8-d481-4004-98c5-4cbe7b352187" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="40f7e692-db03-44dd-a49a-58a09ed93935" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Email</span></th>
+                  <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="1e17b8f8-d481-4004-98c5-4cbe7b352187" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="40f7e692-db03-44dd-a49a-58a09ed93935" data-file-name="app/dashboard/absensi-guru/data/page.tsx">E-mail</span></th>
                   <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="3ad92d60-6f13-46db-b010-5d18b9f205c9" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="3eb32dd2-9a0d-48fe-bc94-756a05f99313" data-file-name="app/dashboard/absensi-guru/data/page.tsx">No. Telepon</span></th>
                   <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider" data-unique-id="d746d15a-8cbc-44a7-b827-8b8dae483ad4" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="15f3cdcd-4b69-4669-9a49-47801634a393" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Aksi</span></th>
                 </tr>
@@ -523,7 +523,7 @@ export default function TeacherDataPage() {
         opacity: 0,
         scale: 0.9
       }} data-unique-id="b6a24c57-30c6-4f26-83be-5dd4c5781990" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
-            <div className="flex items-center justify-between p-6 border-b" data-unique-id="a05ddbb3-249a-44af-a7f3-5baba846c58b" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+            <div className="flex items-center mb-1 justify-between p-3 border-b" data-unique-id="a05ddbb3-249a-44af-a7f3-5baba846c58b" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
               <h3 className="text-lg font-semibold" data-unique-id="ce54bf4e-9ab4-4f5a-b1ee-6baa061c7828" data-file-name="app/dashboard/absensi-guru/data/page.tsx" data-dynamic-text="true"><span className="editable-text" data-unique-id="bc44c7ef-be36-4792-a114-fc0b2008d789" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Edit Data </span>{currentTeacher?.name}</h3>
               <button onClick={() => setShowEditModal(false)} data-unique-id="341483a7-92f8-4297-b7d3-bd1ff1b81d34" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                 <X size={24} className="text-gray-500 hover:text-gray-700" />
@@ -531,7 +531,7 @@ export default function TeacherDataPage() {
             </div>
             
             <form onSubmit={handleUpdateTeacher} data-unique-id="1501725a-ec2a-4e9b-8d2f-2e17b7bd0290" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
-              <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4" data-unique-id="057599ac-734b-4793-9ed9-5e8817ccfa00" data-file-name="app/dashboard/absensi-guru/data/page.tsx" data-dynamic-text="true">
+              <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2" data-unique-id="057599ac-734b-4793-9ed9-5e8817ccfa00" data-file-name="app/dashboard/absensi-guru/data/page.tsx" data-dynamic-text="true">
                 {/* Name */}
                 <div data-unique-id="658d19ac-566e-4b81-92a5-93402b62b8d4" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                   <label htmlFor="edit-name" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="5954b7da-29df-47a6-a735-793e2cf5835a" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="fc06e025-f24a-483a-8065-d0e71620a6f1" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
@@ -561,10 +561,10 @@ export default function TeacherDataPage() {
                 
                 {/* Email */}
                 <div data-unique-id="47b58606-53e6-4af0-a401-9617f06e5e6a" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
-                  <label htmlFor="edit-email" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="7d50bdfe-670e-4127-8f33-e41d7e966fc8" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="24acf31d-5f2c-4050-a6e6-b1532a7f62f9" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+                  <label htmlFor="edit-email" disabled className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="7d50bdfe-670e-4127-8f33-e41d7e966fc8" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="24acf31d-5f2c-4050-a6e6-b1532a7f62f9" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                     Email
                   </span></label>
-                  <input type="email" id="edit-email" name="email" value={formData.email} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="ccd17d80-5bd4-4742-b289-2aaa67530a42" data-file-name="app/dashboard/absensi-guru/data/page.tsx" />
+                  <input type="email" id="edit-email" name="email" disabled value={formData.email} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="ccd17d80-5bd4-4742-b289-2aaa67530a42" data-file-name="app/dashboard/absensi-guru/data/page.tsx" />
                 </div>
                 
                 {/* Phone */}
@@ -584,35 +584,36 @@ export default function TeacherDataPage() {
                 </div>
                 
                 {/* Telegram ID */}
-                <div data-unique-id="f06a24a7-f779-426e-bf5b-4d522143d6a6" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+                {/*<div data-unique-id="f06a24a7-f779-426e-bf5b-4d522143d6a6" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                   <label htmlFor="edit-telegramId" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="bd50fbfc-d6f9-4a52-af14-d79f857fe818" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="c1676c37-62b3-4699-ab5c-9c8a3135ac8c" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                     ID Telegram
                   </span></label>
                   <input type="text" id="edit-telegramId" name="telegramId" value={formData.telegramId} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="213ebc52-cb8f-42b0-ba3b-3799c857f889" data-file-name="app/dashboard/absensi-guru/data/page.tsx" />
-                </div>
+                </div>*/}
                 
                 {/* Role */}
                 <div data-unique-id="205782d8-757e-4920-a090-ad34a600761b" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
-                  <label htmlFor="edit-role" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="d233cd65-8e95-4170-9d46-a2813e34bf86" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="e87cd296-1020-4772-80b9-5130dfd2f5e8" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+                  <label htmlFor="edit-role" disabled className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="d233cd65-8e95-4170-9d46-a2813e34bf86" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="e87cd296-1020-4772-80b9-5130dfd2f5e8" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                     Jabatan
                   </span></label>
-                  <select id="edit-role" name="role" value={formData.role} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="16ae6749-0f53-4561-bc53-af8c232541f3" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+                  <select id="edit-role" name="role" disabled value={formData.role} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="16ae6749-0f53-4561-bc53-af8c232541f3" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                     <option value="teacher" data-unique-id="26874f4e-093d-47b6-b399-ffe71086bf1a" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="6ee62ef7-0b47-4de2-ba15-24967178b36b" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Guru</span></option>
                     <option value="staff" data-unique-id="d77fa34a-1987-42f7-8031-5acbfd7e5876" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="468ab59e-106f-4718-906d-7840feb41540" data-file-name="app/dashboard/absensi-guru/data/page.tsx">Tenaga Kependidikan</span></option>
                   </select>
                 </div>
               </div>
               
-              <div className="px-6 py-4 bg-gray-50 flex justify-end" data-unique-id="a6d32900-3f05-43bb-a3ac-adcd267a95f0" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+              <div className="px-6 py-4 rounded-xl bg-gray-50 flex justify-end" data-unique-id="a6d32900-3f05-43bb-a3ac-adcd267a95f0" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                 <button type="button" onClick={() => setShowEditModal(false)} className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 mr-3 hover:bg-gray-50" data-unique-id="39f9436a-8b18-40e5-a55d-c006e7f9e98b" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="6e25c895-ca22-4a7d-ac2a-7370fbcd4a2b" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
                   Batal
                 </span></button>
-                <button type="submit" className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary hover:bg-opacity-90" data-unique-id="cfbe7491-b7d4-448c-8d9a-732b8eecdf43" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="56552830-0fe9-45cb-b653-55c8822d36d0" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
-                  Perbarui
+                <button type="submit" className="px-4 py-2 bg-primary text-white rounded-md hover:bg-orange-500 active:bg-orange-600 transition-colors" data-unique-id="cfbe7491-b7d4-448c-8d9a-732b8eecdf43" data-file-name="app/dashboard/absensi-guru/data/page.tsx"><span className="editable-text" data-unique-id="56552830-0fe9-45cb-b653-55c8822d36d0" data-file-name="app/dashboard/absensi-guru/data/page.tsx">
+                  Perbarui Data
                 </span></button>
               </div>
             </form>
           </motion.div>
+       
         </div>}
       
       {/* Delete Confirmation Modal */}
@@ -651,5 +652,6 @@ export default function TeacherDataPage() {
             </div>
           </motion.div>
         </div>}
+     <hr className="border-t border-none mb-5" />
     </div>;
 }
