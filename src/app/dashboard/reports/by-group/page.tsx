@@ -33,10 +33,8 @@ export default function GroupAttendanceReport() {
  useEffect(() => {
    const fetchData = async () => {
      if (!schoolId) return;
-
      try {
        setLoading(true);
-
        // Fetch school information
        const schoolDoc = await getDoc(doc(db, "schools", schoolId));
        if (schoolDoc.exists()) {
@@ -49,13 +47,11 @@ export default function GroupAttendanceReport() {
            principalNip: data.principalNip || ""
          });
        }
-
        // Fetch classes
        const classesRef = collection(db, `schools/${schoolId}/classes`);
        const classesQuery = query(classesRef, orderBy("name"));
        const classesSnapshot = await getDocs(classesQuery);
        const classesData: string[] = [];
-
        classesSnapshot.forEach((doc) => {
          const data = doc.data();
          if (data.name) {
@@ -63,7 +59,6 @@ export default function GroupAttendanceReport() {
          }
        });
        setClasses(classesData.sort());
-
        // Fetch students with attendance data
        await fetchStudentsWithAttendance();
      } catch (error) {
@@ -73,7 +68,6 @@ export default function GroupAttendanceReport() {
        setLoading(false);
      }
    };
-
    fetchData();
  }, [schoolId]);
  // Fetch attendance data when date range or class selection changes
@@ -82,26 +76,21 @@ export default function GroupAttendanceReport() {
      fetchStudentsWithAttendance();
    }
  }, [dateRange, selectedClass, schoolId]);
-
  // Set filtered students whenever students array changes
  useEffect(() => {
    setFilteredStudents(students);
  }, [students]);
  const fetchStudentsWithAttendance = async () => {
    if (!schoolId) return;
-
    try {
      setLoading(true);
-
      // Fetch students filtered by class if needed
      const studentsRef = collection(db, `schools/${schoolId}/students`);
      const studentsQuery = selectedClass === "all"
        ? query(studentsRef, orderBy("name"))
        : query(studentsRef, where("class", "==", selectedClass), orderBy("name"));
-
      const studentsSnapshot = await getDocs(studentsQuery);
      let studentsList: any[] = [];
-
      studentsSnapshot.forEach(doc => {
        studentsList.push({
          id: doc.id,
@@ -114,7 +103,6 @@ export default function GroupAttendanceReport() {
          total: 0
        });
      });
-
      // If we have students, fetch attendance records for the date range
      if (studentsList.length > 0) {
        const attendanceRef = collection(db, `schools/${schoolId}/attendance`);
@@ -123,15 +111,12 @@ export default function GroupAttendanceReport() {
          where("date", ">=", dateRange.start),
          where("date", "<=", dateRange.end)
        );
-
        const attendanceSnapshot = await getDocs(attendanceQuery);
-
        // Count attendance by student ID
        attendanceSnapshot.forEach(doc => {
          const data = doc.data();
          const studentId = data.studentId;
          const status = data.status;
-
          // Find the student and update counts
          const studentIndex = studentsList.findIndex(s => s.id === studentId);
          if (studentIndex !== -1) {
@@ -144,12 +129,10 @@ export default function GroupAttendanceReport() {
            } else if (status === 'absent' || status === 'alpha') {
              studentsList[studentIndex].alpha++;
            }
-
            studentsList[studentIndex].total++;
          }
        });
      }
-
      setStudents(studentsList);
    } catch (error) {
      console.error("Error fetching student attendance data:", error);
@@ -171,7 +154,6 @@ export default function GroupAttendanceReport() {
  // Generate and download PDF report
  const handleDownloadPDF = async () => {
    setIsDownloading(true);
-
    try {
      // Create PDF document
      const doc = new jsPDF({
@@ -179,24 +161,20 @@ export default function GroupAttendanceReport() {
        unit: "mm",
        format: "a4"
      });
-
      const pageWidth = doc.internal.pageSize.getWidth();
      const pageHeight = doc.internal.pageSize.getHeight();
      const margin = 15;
      const contentWidth = pageWidth - (margin * 2);
      // Set default font
      doc.setFont("helvetica", "normal");
-
      // Add KOP Sekolah
      doc.setFontSize(16);
      doc.setFont("helvetica", "bold");
      doc.text(schoolInfo.name.toUpperCase(), pageWidth / 2, margin + 5, { align: "center" });
-
      doc.setFontSize(12);
      doc.setFont("helvetica", "normal");
      doc.text(schoolInfo.address, pageWidth / 2, margin + 12, { align: "center" });
      doc.text(`NPSN: ${schoolInfo.npsn}`, pageWidth / 2, margin + 18, { align: "center" });
-
      // Horizontal line
      doc.setLineWidth(0.5);
      doc.line(margin, margin + 22, pageWidth - margin, margin + 22);
@@ -204,77 +182,60 @@ export default function GroupAttendanceReport() {
      doc.setFontSize(14);
      doc.setFont("helvetica", "bold");
      doc.text("REKAPITULASI LAPORAN ABSENSI SISWA", pageWidth / 2, margin + 30, { align: "center" });
-
      doc.setFontSize(12);
      doc.setFont("helvetica", "normal");
      doc.text(`KELAS: ${selectedClass === "all" ? "SEMUA KELAS" : selectedClass.toUpperCase()}`, pageWidth / 2, margin + 36, { align: "center" });
-
      // Add date range
      const startDate = format(new Date(dateRange.start), "d MMMM yyyy", { locale: id });
      const endDate = format(new Date(dateRange.end), "d MMMM yyyy", { locale: id });
      doc.text(`Periode: ${startDate} - ${endDate}`, pageWidth / 2, margin + 42, { align: "center" });
-
      // Draw table headers
      const headers = ["NO.", "NAMA SISWA", "NISN", "KELAS", "HADIR", "SAKIT", "IZIN", "ALPHA", "TOTAL"];
      const colWidths = [15, 70, 35, 25, 20, 20, 20, 20, 25];
      let yPos = margin + 52;
-
      // Draw header row with light blue background
      doc.setFillColor(173, 216, 230); // Light blue
      doc.rect(margin, yPos, contentWidth, 10, "F");
      doc.setDrawColor(0, 0, 0);
      doc.setLineWidth(0.3);
      doc.rect(margin, yPos, contentWidth, 10, "S");
-
      let xPos = margin;
-
      // Draw column headers
      doc.setFontSize(10);
      doc.setFont("helvetica", "bold");
      doc.setTextColor(0, 0, 0);
-
      headers.forEach((header, i) => {
        // Draw vertical line (except for first column)
        if (i > 0) {
          doc.line(xPos, yPos, xPos, yPos + 10);
        }
-
        // Add header text
        doc.text(header, xPos + colWidths[i]/2, yPos + 6, { align: "center" });
        xPos += colWidths[i];
      });
-
      yPos += 10;
-
      // Draw table rows
      doc.setFont("helvetica", "normal");
      doc.setFontSize(9);
-
      students.forEach((student, index) => {
        // Check if we need a new page
        if (yPos > pageHeight - margin - 50) {
          doc.addPage();
-
          // Redraw header on new page
          doc.setFont("helvetica", "bold");
          doc.setFontSize(14);
          doc.text(schoolInfo.name.toUpperCase(), pageWidth / 2, margin + 5, { align: "center" });
-
          doc.setFontSize(10);
          doc.setFont("helvetica", "normal");
          doc.text("(Lanjutan)", pageWidth / 2, margin + 12, { align: "center" });
-
          yPos = margin + 25;
-
          // Redraw table header
          doc.setFillColor(173, 216, 230);
          doc.rect(margin, yPos, contentWidth, 10, "F");
          doc.rect(margin, yPos, contentWidth, 10, "S");
-
          xPos = margin;
          doc.setFont("helvetica", "bold");
          doc.setFontSize(10);
-
          headers.forEach((header, i) => {
            if (i > 0) {
              doc.line(xPos, yPos, xPos, yPos + 10);
@@ -282,109 +243,93 @@ export default function GroupAttendanceReport() {
            doc.text(header, xPos + colWidths[i]/2, yPos + 6, { align: "center" });
            xPos += colWidths[i];
          });
-
          yPos += 10;
          doc.setFont("helvetica", "normal");
          doc.setFontSize(9);
        }
-
        // Alternating row background
        if (index % 2 === 0) {
          doc.setFillColor(245, 245, 245);
          doc.rect(margin, yPos, contentWidth, 8, "F");
        }
-
        // Draw row border
        doc.setDrawColor(0, 0, 0);
        doc.rect(margin, yPos, contentWidth, 8, "S");
-
        // Draw cell content
        xPos = margin;
-
        // Number
        doc.text((index + 1).toString(), xPos + colWidths[0]/2, yPos + 5, { align: "center" });
        xPos += colWidths[0];
-
        // Vertical line
        doc.line(xPos, yPos, xPos, yPos + 8);
-
        // Name (truncate if too long)
        const studentName = student.name || "";
        const displayName = studentName.length > 35 ? studentName.substring(0, 32) + "..." : studentName;
        doc.text(displayName, xPos + 3, yPos + 5);
        xPos += colWidths[1];
-
-       // NISN
+       // NISN - Convert to string to fix the error
        doc.line(xPos, yPos, xPos, yPos + 8);
-       doc.text(student.nisn || "", xPos + colWidths[2]/2, yPos + 5, { align: "center" });
+       doc.text(String(student.nisn || ""), xPos + colWidths[2]/2, yPos + 5, { align: "center" });
        xPos += colWidths[2];
-
        // Class
        doc.line(xPos, yPos, xPos, yPos + 8);
-       doc.text(student.class || "", xPos + colWidths[3]/2, yPos + 5, { align: "center" });
+       doc.text(String(student.class || ""), xPos + colWidths[3]/2, yPos + 5, { align: "center" });
        xPos += colWidths[3];
-
-       // Attendance data
-       [student.hadir, student.sakit, student.izin, student.alpha, student.total].forEach((value, i) => {
+       // Attendance data - Convert all numbers to strings
+       const attendanceValues = [
+         student.hadir || 0,
+         student.sakit || 0,
+         student.izin || 0,
+         student.alpha || 0,
+         student.total || 0
+       ];
+       attendanceValues.forEach((value, i) => {
          doc.line(xPos, yPos, xPos, yPos + 8);
-         doc.text(value.toString(), xPos + colWidths[4 + i]/2, yPos + 5, { align: "center" });
+         doc.text(String(value), xPos + colWidths[4 + i]/2, yPos + 5, { align: "center" });
          xPos += colWidths[4 + i];
        });
-
        yPos += 8;
      });
-
      // Add total row
      doc.setFillColor(220, 220, 220);
      doc.rect(margin, yPos, contentWidth, 8, "F");
      doc.rect(margin, yPos, contentWidth, 8, "S");
-
      doc.setFont("helvetica", "bold");
-
      const totalHadir = students.reduce((sum, student) => sum + (student.hadir || 0), 0);
      const totalSakit = students.reduce((sum, student) => sum + (student.sakit || 0), 0);
      const totalIzin = students.reduce((sum, student) => sum + (student.izin || 0), 0);
      const totalAlpha = students.reduce((sum, student) => sum + (student.alpha || 0), 0);
      const grandTotal = totalHadir + totalSakit + totalIzin + totalAlpha;
-
      xPos = margin;
      doc.text("TOTAL", xPos + (colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3])/2, yPos + 5, { align: "center" });
      xPos += colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3];
-
-     [totalHadir, totalSakit, totalIzin, totalAlpha, grandTotal].forEach((value, i) => {
+     // Convert all totals to strings
+     const totalValues = [totalHadir, totalSakit, totalIzin, totalAlpha, grandTotal];
+     totalValues.forEach((value, i) => {
        doc.line(xPos, yPos, xPos, yPos + 8);
-       doc.text(value.toString(), xPos + colWidths[4 + i]/2, yPos + 5, { align: "center" });
+       doc.text(String(value), xPos + colWidths[4 + i]/2, yPos + 5, { align: "center" });
        xPos += colWidths[4 + i];
      });
-
      yPos += 15;
-
      // Add footer with signature section
      const currentDate = format(new Date(), "d MMMM yyyy", { locale: id });
      doc.setFont("helvetica", "normal");
      doc.setFontSize(10);
-
      const signatureWidth = (pageWidth - margin * 2) / 2;
-
      doc.text("Mengetahui,", margin + signatureWidth * 0.25, yPos + 10, { align: "center" });
      doc.text("Administrator", margin + signatureWidth * 1.75, yPos + 10, { align: "center" });
-
      doc.text("Kepala Sekolah", margin + signatureWidth * 0.25, yPos + 16, { align: "center" });
      doc.text("Pengelola Data", margin + signatureWidth * 1.75, yPos + 16, { align: "center" });
-
      doc.setFont("helvetica", "bold");
      doc.text(schoolInfo.principalName || "________________", margin + signatureWidth * 0.25, yPos + 35, { align: "center" });
      doc.text("Administrator", margin + signatureWidth * 1.75, yPos + 35, { align: "center" });
-
      doc.setFont("helvetica", "normal");
      doc.text(`NIP. ${schoolInfo.principalNip || "_______________"}`, margin + signatureWidth * 0.25, yPos + 41, { align: "center" });
      doc.text("NIP. _______________", margin + signatureWidth * 1.75, yPos + 41, { align: "center" });
-
      // Generate filename with current date
      const classLabel = selectedClass === "all" ? "Semua_Kelas" : selectedClass.replace(/\s+/g, '_');
      const fileName = `Laporan_Kehadiran_${classLabel}_${format(new Date(), "yyyyMMdd")}.pdf`;
      doc.save(fileName);
-
      toast.success(`Laporan ${selectedClass === "all" ? "Semua Kelas" : selectedClass} berhasil diunduh sebagai ${fileName}`);
    } catch (error) {
      console.error("Error generating PDF:", error);
@@ -396,7 +341,6 @@ export default function GroupAttendanceReport() {
  // Generate and download Excel report
  const handleDownloadExcel = async () => {
    setIsDownloading(true);
-
    try {
      // Create worksheet data with school information
      const wsData = [
@@ -410,7 +354,6 @@ export default function GroupAttendanceReport() {
        [],
        ["No.", "Nama Siswa", "NISN", "Kelas", "Hadir", "Sakit", "Izin", "Alpha", "Total"]
      ];
-
      // Add student data
      students.forEach((student, index) => {
        wsData.push([
@@ -425,18 +368,15 @@ export default function GroupAttendanceReport() {
          student.total || 0
        ]);
      });
-
      // Add total row
      const totalHadir = students.reduce((sum, student) => sum + (student.hadir || 0), 0);
      const totalSakit = students.reduce((sum, student) => sum + (student.sakit || 0), 0);
      const totalIzin = students.reduce((sum, student) => sum + (student.izin || 0), 0);
      const totalAlpha = students.reduce((sum, student) => sum + (student.alpha || 0), 0);
      const grandTotal = totalHadir + totalSakit + totalIzin + totalAlpha;
-
      wsData.push([
        "TOTAL", "", "", "", totalHadir, totalSakit, totalIzin, totalAlpha, grandTotal
      ]);
-
      // Add signature section
      wsData.push(
        [],
@@ -450,11 +390,9 @@ export default function GroupAttendanceReport() {
        [schoolInfo.principalName || "________________", "", "", "", "", "", "", "", "Administrator"],
        [`NIP. ${schoolInfo.principalNip || "_______________"}`, "", "", "", "", "", "", "", "NIP. _______________"]
      );
-
      // Create workbook and add worksheet
      const wb = XLSX.utils.book_new();
      const ws = XLSX.utils.aoa_to_sheet(wsData);
-
      // Set column widths
      const colWidths = [
        { wch: 5 },  // No
@@ -467,17 +405,13 @@ export default function GroupAttendanceReport() {
        { wch: 8 },  // Alpha
        { wch: 8 }   // Total
      ];
-
      ws['!cols'] = colWidths;
-
      // Add worksheet to workbook
      XLSX.utils.book_append_sheet(wb, ws, "Laporan Kehadiran");
-
      // Generate filename with current date
      const classLabel = selectedClass === "all" ? "Semua_Kelas" : selectedClass.replace(/\s+/g, '_');
      const fileName = `Laporan_Kehadiran_${classLabel}_${format(new Date(), "yyyyMMdd")}.xlsx`;
      XLSX.writeFile(wb, fileName);
-
      toast.success(`Laporan ${selectedClass === "all" ? "Semua Kelas" : selectedClass} berhasil diunduh sebagai ${fileName}`);
    } catch (error) {
      console.error("Error generating Excel:", error);
@@ -494,14 +428,12 @@ export default function GroupAttendanceReport() {
        </Link>
        <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Laporan Absen Rombel</h1>
      </div>
-
      {/* Filters and Date Range */}
      <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6">
        <h2 className="text-lg font-semibold mb-4 flex items-center">
          <Filter className="h-5 w-5 mr-2" />
          Filter Data
        </h2>
-
        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
          {/* Class Filter */}
          <div>
@@ -525,7 +457,6 @@ export default function GroupAttendanceReport() {
              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
            </div>
          </div>
-
          {/* Date Range */}
          <div>
            <label htmlFor="start" className="block text-sm font-medium text-gray-700 mb-1">
@@ -540,7 +471,6 @@ export default function GroupAttendanceReport() {
              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
            />
          </div>
-
          <div>
            <label htmlFor="end" className="block text-sm font-medium text-gray-700 mb-1">
              Tanggal Akhir
@@ -555,7 +485,6 @@ export default function GroupAttendanceReport() {
            />
          </div>
        </div>
-
        {/* Filter Summary */}
        <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
          <p className="text-sm text-blue-800">
@@ -566,7 +495,6 @@ export default function GroupAttendanceReport() {
          </p>
        </div>
      </div>
-
      {/* School Information and Table */}
      <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-8">
        <div className="text-center mb-4 sm:mb-3">
@@ -584,7 +512,6 @@ export default function GroupAttendanceReport() {
            Periode: {format(new Date(dateRange.start), "d MMMM yyyy", { locale: id })} - {format(new Date(dateRange.end), "d MMMM yyyy", { locale: id })}
          </p>
        </div>
-
        {loading ? (
          <div className="flex justify-center items-center h-64">
            <Loader2 className="h-12 w-12 text-blue-600 animate-spin" />
@@ -621,7 +548,6 @@ export default function GroupAttendanceReport() {
                        <td className="text-gray-700 border border-gray-300 px-2 sm:px-4 py-2 text-center text-xs sm:text-sm font-bold">{student.total}</td>
                      </tr>
                    ))}
-
                    {/* Total Row */}
                    <tr className="bg-gray-200 border-t-2 border-gray-400 font-bold">
                      <td colSpan={4} className="text-gray-800 border border-gray-300 px-2 sm:px-4 py-3 text-center text-sm font-bold">TOTAL</td>
@@ -658,7 +584,6 @@ export default function GroupAttendanceReport() {
          </div>
        )}
      </div>
-
      {/* Download Buttons */}
      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 pb-20 sm:pb-0">
        <button
@@ -673,7 +598,6 @@ export default function GroupAttendanceReport() {
          )}
          <span className="font-medium text-sm sm:text-base">Download Laporan PDF</span>
        </button>
-
        <button
          onClick={handleDownloadExcel}
          disabled={isDownloading || students.length === 0}
