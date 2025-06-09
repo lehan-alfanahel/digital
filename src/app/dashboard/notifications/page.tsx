@@ -440,7 +440,6 @@ export default function NotificationsPage() {
                        </div>
                      </div>
                    </div>
-
                    <div className="p-4">
                      <h4 className="font-semibold text-gray-900 text-sm mb-2">
                        {watchedValues.title || 'Notification Title'}
@@ -448,7 +447,6 @@ export default function NotificationsPage() {
                      <p className="text-gray-600 text-xs mb-3">
                        {watchedValues.message || 'Your notification message will appear here...'}
                      </p>
-
                      {watchedValues.imageUrl && (
                        <div className="rounded-lg overflow-hidden mb-3">
                          <img
@@ -460,7 +458,6 @@ export default function NotificationsPage() {
                      )}
                    </div>
                  </div>
-
                  <div className="text-center mt-4">
                    <span className="text-xs text-gray-500">Google Android</span>
                  </div>
