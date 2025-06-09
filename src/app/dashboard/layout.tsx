@@ -336,12 +336,7 @@ const DashboardLayout = ({
                <Users size={20} />
                <span><span className="editable-text">Absensi Guru</span></span>
              </Link>
-             {/* Notifications - Super Admin Only */}
-             <Link href="/dashboard/notifications" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive('/dashboard/notifications') ? 'bg-blue-800 text-white font-medium' : 'text-white hover:bg-blue-800'}`} onClick={() => setMenuOpen(false)}>
-               <Bell size={20} />
-               <span><span className="editable-text">Push Notification</span></span>
-             </Link>
-           </>}
+             
 
          {/* TEACHER NAVIGATION */}
          {userRole === 'teacher' && <>
