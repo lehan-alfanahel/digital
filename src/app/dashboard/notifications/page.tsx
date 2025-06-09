@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-import { Bell, Send, Image as ImageIcon, Users, Target, Calendar, Clock, Upload, X, Eye, Settings, Loader2, BarChart3 } from 'lucide-react'
+import { Bell, Send, Upload, X, Eye, Settings, Loader2, BarChart3, Users, Target, Calendar } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
