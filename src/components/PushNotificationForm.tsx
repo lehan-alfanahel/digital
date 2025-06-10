@@ -1,419 +1,284 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from 'react';
-import { Send, Image, Users, Tag, Bell, Loader2, Plus, X, Info, Target, MessageSquare, Settings, BarChart3 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Send, Image, Users, Settings, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import { sendNotification, sendBulkNotification, getNotificationStats } from '@/lib/onesignal-api';
+import { motion } from 'framer-motion';
 interface NotificationStats {
- total_count: number;
- active_count: number;
- name: string;
+total_count: number;
+successful: number;
+failed: number;
+errored: number;
 }
 export default function PushNotificationForm() {
- const [title, setTitle] = useState('');
- const [message, setMessage] = useState('');
- const [imageUrl, setImageUrl] = useState('');
- const [targetType, setTargetType] = useState<'all' | 'role' | 'school' | 'custom'>('all');
- const [targetRole, setTargetRole] = useState('');
- const [schoolId, setSchoolId] = useState('');
- const [customTags, setCustomTags] = useState<Array<{key: string, value: string}>>([]);
- const [actionButtons, setActionButtons] = useState<Array<{id: string, text: string, url?: string}>>([]);
- const [sending, setSending] = useState(false);
- const [stats, setStats] = useState<NotificationStats | null>(null);
- const [loadingStats, setLoadingStats] = useState(false);
- useEffect(() => {
-   loadStats();
- }, []);
- const loadStats = async () => {
-   setLoadingStats(true);
-   try {
-     const statsData = await getNotificationStats();
-     setStats(statsData);
-   } catch (error) {
-     console.error('Error loading stats:', error);
-   } finally {
-     setLoadingStats(false);
-   }
- };
- const addCustomTag = () => {
-   setCustomTags([...customTags, { key: '', value: '' }]);
- };
- const removeCustomTag = (index: number) => {
-   setCustomTags(customTags.filter((_, i) => i !== index));
- };
- const updateCustomTag = (index: number, field: 'key' | 'value', value: string) => {
-   const updatedTags = [...customTags];
-   updatedTags[index][field] = value;
-   setCustomTags(updatedTags);
- };
- const addActionButton = () => {
-   setActionButtons([...actionButtons, { id: `btn_${Date.now()}`, text: '', url: '' }]);
- };
- const removeActionButton = (index: number) => {
-   setActionButtons(actionButtons.filter((_, i) => i !== index));
- };
- const updateActionButton = (index: number, field: 'text' | 'url', value: string) => {
-   const updatedButtons = [...actionButtons];
-   updatedButtons[index][field] = value;
-   setActionButtons(updatedButtons);
- };
- const sendNotificationHandler = async () => {
-   if (!title.trim() || !message.trim()) {
-     toast.error('Judul dan pesan harus diisi');
-     return;
-   }
-   setSending(true);
-   try {
-     let targetTags: Record<string, string> = {};
-     // Build target tags based on selection
-     if (targetType === 'role' && targetRole) {
-       targetTags.user_role = targetRole;
-     } else if (targetType === 'school' && schoolId) {
-       targetTags.school_id = schoolId;
-     } else if (targetType === 'custom') {
-       customTags.forEach(tag => {
-         if (tag.key && tag.value) {
-           targetTags[tag.key] = tag.value;
-         }
-       });
-     }
-     const result = await sendNotification(
-       message,
-       title,
-       undefined,
-       Object.keys(targetTags).length > 0 ? targetTags : undefined,
-       imageUrl || undefined,
-       actionButtons.filter(btn => btn.text.trim()).length > 0
-         ? actionButtons.filter(btn => btn.text.trim())
-         : undefined
-     );
-     if (result.recipients) {
-       toast.success(`Notifikasi berhasil dikirim ke ${result.recipients} pengguna`);
-       // Reset form
-       setTitle('');
-       setMessage('');
-       setImageUrl('');
-       setCustomTags([]);
-       setActionButtons([]);
-       loadStats(); // Refresh stats
-     } else {
-       toast.success('Notifikasi berhasil dikirim');
-     }
-   } catch (error: any) {
-     console.error('Error sending notification:', error);
-     toast.error(`Gagal mengirim notifikasi: ${error.message || 'Unknown error'}`);
-   } finally {
-     setSending(false);
-   }
- };
- return (
-   <div className="space-y-6">
-     {/* Stats Card */}
-     <motion.div
-       initial={{ opacity: 0, y: 20 }}
-       animate={{ opacity: 1, y: 0 }}
-       className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg p-6 text-white"
-     >
+const [title, setTitle] = useState('');
+const [message, setMessage] = useState('');
+const [imageUrl, setImageUrl] = useState('');
+const [actionUrl, setActionUrl] = useState('');
+const [sending, setSending] = useState(false);
+const [stats, setStats] = useState<NotificationStats | null>(null);
+const [loadingStats, setLoadingStats] = useState(false);
+// Load OneSignal stats
+const loadStats = async () => {
+setLoadingStats(true);
+try {
+const response = await fetch('/api/onesignal?action=app_stats');
+const result = await response.json();
+
+
+ if (result.success) {
+   setStats({
+     total_count: result.data.players || 0,
+     successful: 0,
+     failed: 0,
+     errored: 0
+   });
+ }
+
+} catch (error) {
+console.error('Error loading stats:', error);
+} finally {
+setLoadingStats(false);
+}
+};
+// Send notification
+const sendNotification = async () => {
+if (!title.trim() || !message.trim()) {
+toast.error('Judul dan pesan harus diisi');
+return;
+}
+setSending(true);
+try {
+const notificationData = {
+title,
+message,
+...(imageUrl && { big_picture: imageUrl }),
+...(actionUrl && { url: actionUrl }),
+};
+const response = await fetch('/api/onesignal', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+},
+body: JSON.stringify({
+action: 'send_notification',
+data: notificationData,
+}),
+});
+const result = await response.json();
+if (result.success) {
+toast.success('Notifikasi berhasil dikirim!');
+setTitle('');
+setMessage('');
+setImageUrl('');
+setActionUrl('');
+loadStats(); // Refresh stats
+} else {
+throw new Error(result.error?.errors?.[0] || 'Gagal mengirim notifikasi');
+}
+} catch (error) {
+console.error('Error sending notification:', error);
+toast.error(Gagal mengirim notifikasi: ${error});
+} finally {
+setSending(false);
+}
+};
+useEffect(() => {
+loadStats();
+}, []);
+return (
+
+
+   <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+     {/* Header */}
+     <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
        <div className="flex items-center justify-between">
          <div className="flex items-center space-x-3">
-           <div className="bg-white/20 p-3 rounded-lg">
-             <BarChart3 className="h-6 w-6" />
+           <Send className="h-6 w-6 text-white" />
+           <h2 className="text-xl font-semibold text-white">Kirim Push Notification</h2>
+         </div>
+         <button
+           onClick={loadStats}
+           disabled={loadingStats}
+           className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-colors flex items-center space-x-2"
+         >
+           {loadingStats ? (
+             <Loader2 className="h-4 w-4 animate-spin" />
+           ) : (
+             <Settings className="h-4 w-4" />
+           )}
+           <span>Refresh Stats</span>
+         </button>
+       </div>
+     </div>
+     <div className="p-6">
+       {/* Stats Cards */}
+       {stats && (
+         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             className="bg-blue-50 rounded-lg p-4 border border-blue-200"
+           >
+             <div className="flex items-center justify-between">
+               <div>
+                 <p className="text-blue-600 text-sm font-medium">Total Devices</p>
+                 <p className="text-2xl font-bold text-blue-800">{stats.total_count}</p>
+               </div>
+               <Users className="h-8 w-8 text-blue-400" />
+             </div>
+           </motion.div>
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.1 }}
+             className="bg-green-50 rounded-lg p-4 border border-green-200"
+           >
+             <div className="flex items-center justify-between">
+               <div>
+                 <p className="text-green-600 text-sm font-medium">Successful</p>
+                 <p className="text-2xl font-bold text-green-800">{stats.successful}</p>
+               </div>
+               <CheckCircle className="h-8 w-8 text-green-400" />
+             </div>
+           </motion.div>
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.2 }}
+             className="bg-red-50 rounded-lg p-4 border border-red-200"
+           >
+             <div className="flex items-center justify-between">
+               <div>
+                 <p className="text-red-600 text-sm font-medium">Failed</p>
+                 <p className="text-2xl font-bold text-red-800">{stats.failed}</p>
+               </div>
+               <AlertCircle className="h-8 w-8 text-red-400" />
+             </div>
+           </motion.div>
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.3 }}
+             className="bg-amber-50 rounded-lg p-4 border border-amber-200"
+           >
+             <div className="flex items-center justify-between">
+               <div>
+                 <p className="text-amber-600 text-sm font-medium">Errored</p>
+                 <p className="text-2xl font-bold text-amber-800">{stats.errored}</p>
+               </div>
+               <AlertCircle className="h-8 w-8 text-amber-400" />
+             </div>
+           </motion.div>
+         </div>
+       )}
+       {/* Notification Form */}
+       <div className="space-y-6">
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div>
+             <label className="block text-sm font-medium text-gray-700 mb-2">
+               Judul Notifikasi *
+             </label>
+             <input
+               type="text"
+               value={title}
+               onChange={(e) => setTitle(e.target.value)}
+               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+               placeholder="Masukkan judul notifikasi"
+               maxLength={50}
+             />
+             <p className="text-xs text-gray-500 mt-1">{title.length}/50 karakter</p>
            </div>
            <div>
-             <h3 className="text-lg font-semibold">Statistik Aplikasi</h3>
-             <p className="text-blue-100 text-sm">Data pengguna aplikasi Android</p>
+             <label className="block text-sm font-medium text-gray-700 mb-2">
+               URL Gambar (Opsional)
+             </label>
+             <div className="relative">
+               <Image className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+               <input
+                 type="url"
+                 value={imageUrl}
+                 onChange={(e) => setImageUrl(e.target.value)}
+                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="https://example.com/image.jpg"
+               />
+             </div>
            </div>
          </div>
-         {loadingStats ? (
-           <Loader2 className="h-5 w-5 animate-spin" />
-         ) : stats && (
-           <div className="text-right">
-             <div className="text-2xl font-bold">{stats.total_count?.toLocaleString() || '0'}</div>
-             <div className="text-sm text-blue-100">Total Pengguna</div>
-             <div className="text-lg font-semibold">{stats.active_count?.toLocaleString() || '0'}</div>
-             <div className="text-xs text-blue-100">Aktif</div>
-           </div>
-         )}
-       </div>
-     </motion.div>
-     {/* Main Form */}
-     <motion.div
-       initial={{ opacity: 0, y: 20 }}
-       animate={{ opacity: 1, y: 0 }}
-       transition={{ delay: 0.1 }}
-       className="bg-white rounded-xl shadow-lg border border-gray-200 p-6"
-     >
-       <div className="flex items-center mb-6">
-         <div className="bg-blue-100 p-3 rounded-lg mr-3">
-           <Bell className="h-6 w-6 text-blue-600" />
-         </div>
-         <div>
-           <h2 className="text-xl font-semibold">Kirim Push Notification</h2>
-           <p className="text-gray-600 text-sm">Kirim notifikasi ke pengguna aplikasi Android</p>
-         </div>
-       </div>
-       <div className="space-y-6">
-         {/* Title */}
          <div>
            <label className="block text-sm font-medium text-gray-700 mb-2">
-             <MessageSquare className="inline h-4 w-4 mr-1" />
-             Judul Notifikasi
-           </label>
-           <input
-             type="text"
-             value={title}
-             onChange={(e) => setTitle(e.target.value)}
-             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors"
-             placeholder="Masukkan judul notifikasi..."
-             maxLength={50}
-           />
-           <div className="flex justify-between items-center mt-1">
-             <p className="text-xs text-gray-500">{title.length}/50 karakter</p>
-             {title.length > 40 && (
-               <p className="text-xs text-amber-600">Judul terlalu panjang untuk tampilan optimal</p>
-             )}
-           </div>
-         </div>
-         {/* Message */}
-         <div>
-           <label className="block text-sm font-medium text-gray-700 mb-2">
-             <MessageSquare className="inline h-4 w-4 mr-1" />
-             Pesan
+             Pesan Notifikasi *
            </label>
            <textarea
              value={message}
              onChange={(e) => setMessage(e.target.value)}
              rows={4}
-             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
-             placeholder="Tulis pesan notifikasi..."
+             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+             placeholder="Masukkan pesan notifikasi yang ingin dikirim..."
              maxLength={200}
            />
-           <div className="flex justify-between items-center mt-1">
-             <p className="text-xs text-gray-500">{message.length}/200 karakter</p>
-             {message.length > 150 && (
-               <p className="text-xs text-amber-600">Pesan mungkin terpotong pada beberapa perangkat</p>
-             )}
-           </div>
+           <p className="text-xs text-gray-500 mt-1">{message.length}/200 karakter</p>
          </div>
-         {/* Image URL */}
          <div>
            <label className="block text-sm font-medium text-gray-700 mb-2">
-             <Image className="inline h-4 w-4 mr-1" />
-             URL Gambar (Opsional)
+             URL Action (Opsional)
            </label>
            <input
              type="url"
-             value={imageUrl}
-             onChange={(e) => setImageUrl(e.target.value)}
-             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors"
-             placeholder="https://example.com/image.jpg"
+             value={actionUrl}
+             onChange={(e) => setActionUrl(e.target.value)}
+             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+             placeholder="https://example.com/action"
            />
-           <p className="text-xs text-gray-500 mt-1">
-             Gambar akan ditampilkan sebagai big picture notification
-           </p>
+           <p className="text-xs text-gray-500 mt-1">URL yang akan dibuka saat notifikasi diklik</p>
          </div>
-         {/* Target Selection */}
-         <div>
-           <label className="block text-sm font-medium text-gray-700 mb-2">
-             <Target className="inline h-4 w-4 mr-1" />
-             Target Pengguna
-           </label>
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-             {[
-               { value: 'all', label: 'Semua Pengguna', icon: Users },
-               { value: 'role', label: 'Berdasarkan Peran', icon: Tag },
-               { value: 'school', label: 'Berdasarkan Sekolah', icon: Settings },
-               { value: 'custom', label: 'Custom Tags', icon: Target }
-             ].map(({ value, label, icon: Icon }) => (
-               <motion.button
-                 key={value}
-                 type="button"
-                 onClick={() => setTargetType(value as any)}
-                 whileHover={{ scale: 1.02 }}
-                 whileTap={{ scale: 0.98 }}
-                 className={`p-3 rounded-lg border-2 transition-all ${
-                   targetType === value
-                     ? 'border-blue-500 bg-blue-50 text-blue-700'
-                     : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                 }`}
-               >
-                 <Icon className="h-5 w-5 mx-auto mb-1" />
-                 <div className="text-xs font-medium">{label}</div>
-               </motion.button>
-             ))}
-           </div>
-         </div>
-         {/* Role Selection */}
-         {targetType === 'role' && (
-           <motion.div
-             initial={{ opacity: 0, height: 0 }}
-             animate={{ opacity: 1, height: 'auto' }}
-             exit={{ opacity: 0, height: 0 }}
-           >
-             <label className="block text-sm font-medium text-gray-700 mb-2">
-               Pilih Peran
-             </label>
-             <select
-               value={targetRole}
-               onChange={(e) => setTargetRole(e.target.value)}
-               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-             >
-               <option value="">Pilih Peran</option>
-               <option value="admin">Administrator</option>
-               <option value="teacher">Guru</option>
-               <option value="student">Siswa</option>
-             </select>
-           </motion.div>
-         )}
-         {/* School Selection */}
-         {targetType === 'school' && (
-           <motion.div
-             initial={{ opacity: 0, height: 0 }}
-             animate={{ opacity: 1, height: 'auto' }}
-             exit={{ opacity: 0, height: 0 }}
-           >
-             <label className="block text-sm font-medium text-gray-700 mb-2">
-               ID Sekolah
-             </label>
-             <input
-               type="text"
-               value={schoolId}
-               onChange={(e) => setSchoolId(e.target.value)}
-               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-               placeholder="Masukkan ID sekolah"
-             />
-           </motion.div>
-         )}
-         {/* Custom Tags */}
-         {targetType === 'custom' && (
-           <motion.div
-             initial={{ opacity: 0, height: 0 }}
-             animate={{ opacity: 1, height: 'auto' }}
-             exit={{ opacity: 0, height: 0 }}
-           >
-             <div className="flex items-center justify-between mb-3">
-               <label className="block text-sm font-medium text-gray-700">
-                 Custom Tags
-               </label>
-               <button
-                 type="button"
-                 onClick={addCustomTag}
-                 className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
-               >
-                 <Plus className="h-4 w-4" />
-                 Tambah Tag
-               </button>
-             </div>
-             <div className="space-y-3">
-               {customTags.map((tag, index) => (
-                 <div key={index} className="flex gap-3 items-center">
-                   <input
-                     type="text"
-                     value={tag.key}
-                     onChange={(e) => updateCustomTag(index, 'key', e.target.value)}
-                     className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                     placeholder="Key"
-                   />
-                   <input
-                     type="text"
-                     value={tag.value}
-                     onChange={(e) => updateCustomTag(index, 'value', e.target.value)}
-                     className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                     placeholder="Value"
-                   />
-                   <button
-                     type="button"
-                     onClick={() => removeCustomTag(index)}
-                     className="text-red-500 hover:text-red-700"
-                   >
-                     <X className="h-4 w-4" />
-                   </button>
+         {/* Preview */}
+         {(title || message) && (
+           <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+             <h4 className="text-sm font-medium text-gray-700 mb-3">Preview Notifikasi:</h4>
+             <div className="bg-white rounded-lg p-4 shadow-sm border max-w-sm">
+               <div className="flex items-start space-x-3">
+                 <div className="bg-blue-500 rounded-full p-2">
+                   <Send className="h-4 w-4 text-white" />
                  </div>
-               ))}
-             </div>
-           </motion.div>
-         )}
-         {/* Action Buttons */}
-         <div>
-           <div className="flex items-center justify-between mb-3">
-             <label className="block text-sm font-medium text-gray-700">
-               Tombol Aksi (Opsional)
-             </label>
-             <button
-               type="button"
-               onClick={addActionButton}
-               className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
-             >
-               <Plus className="h-4 w-4" />
-               Tambah Tombol
-             </button>
-           </div>
-           <div className="space-y-3">
-             {actionButtons.map((button, index) => (
-               <div key={index} className="flex gap-3 items-center">
-                 <input
-                   type="text"
-                   value={button.text}
-                   onChange={(e) => updateActionButton(index, 'text', e.target.value)}
-                   className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                   placeholder="Teks tombol"
-                 />
-                 <input
-                   type="url"
-                   value={button.url || ''}
-                   onChange={(e) => updateActionButton(index, 'url', e.target.value)}
-                   className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                   placeholder="URL (opsional)"
-                 />
-                 <button
-                   type="button"
-                   onClick={() => removeActionButton(index)}
-                   className="text-red-500 hover:text-red-700"
-                 >
-                   <X className="h-4 w-4" />
-                 </button>
+                 <div className="flex-1">
+                   <h5 className="font-medium text-gray-900 text-sm">{title || 'Judul Notifikasi'}</h5>
+                   <p className="text-gray-600 text-sm mt-1">{message || 'Pesan notifikasi'}</p>
+                   {imageUrl && (
+                     <div className="mt-2">
+                       <img
+                         src={imageUrl}
+                         alt="Preview"
+                         className="rounded-lg max-w-full h-20 object-cover"
+                         onError={(e) => {
+                           (e.target as HTMLImageElement).style.display = 'none';
+                         }}
+                       />
+                     </div>
+                   )}
+                 </div>
                </div>
-             ))}
+             </div>
            </div>
-         </div>
-       </div>
-       {/* Send Button */}
-       <div className="mt-8">
-         <motion.button
-           onClick={sendNotificationHandler}
-           disabled={sending || !title.trim() || !message.trim()}
-           className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
-           whileHover={{ scale: sending ? 1 : 1.02 }}
-           whileTap={{ scale: sending ? 1 : 0.98 }}
-         >
-           <div className="flex items-center justify-center space-x-2">
+         )}
+         {/* Send Button */}
+         <div className="flex justify-end">
+           <motion.button
+             onClick={sendNotification}
+             disabled={sending || !title.trim() || !message.trim()}
+             className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+             whileHover={{ scale: 1.02 }}
+             whileTap={{ scale: 0.98 }}
+           >
              {sending ? (
                <Loader2 className="h-5 w-5 animate-spin" />
              ) : (
                <Send className="h-5 w-5" />
              )}
              <span>{sending ? 'Mengirim...' : 'Kirim Notifikasi'}</span>
-           </div>
-         </motion.button>
-       </div>
-       {/* Instructions */}
-       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-         <div className="flex items-start space-x-3">
-           <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-           <div>
-             <h4 className="font-medium text-blue-800 mb-2">Panduan Penggunaan:</h4>
-             <ul className="text-sm text-blue-700 space-y-1">
-               <li>• Judul maksimal 50 karakter untuk tampilan optimal</li>
-               <li>• Pesan maksimal 200 karakter</li>
-               <li>• Gambar akan ditampilkan sebagai big picture notification</li>
-               <li>• Custom tags berguna untuk targeting spesifik</li>
-               <li>• Tombol aksi akan muncul di notifikasi (maksimal 3 tombol)</li>
-               <li>• Notifikasi akan dikirim ke semua perangkat yang berlangganan</li>
-             </ul>
-           </div>
+           </motion.button>
          </div>
        </div>
-     </motion.div>
+     </div>
    </div>
  );
 }
