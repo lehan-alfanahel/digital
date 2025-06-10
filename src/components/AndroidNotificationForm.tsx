@@ -1,6 +1,3 @@
-Saya akan membuat halaman "PESAN ANDROID" untuk mengirim push notification melalui OneSignal. Mari saya buat komponen-komponen yang diperlukan dan halaman utamanya.
-Pertama, saya akan memperbarui konfigurasi OneSignal dengan kredensial yang Anda berikan:
-src/lib/onesignal-config.ts
 export const ONESIGNAL_CONFIG = {
 APP_ID: 'c8ac779e-241b-4903-8ed4-6766936a4fee',
 API_KEY: 'os_v2_app_zcwhphredneqhdwum5tjg2sp5zlobxnaq2oegheswznxni45eipldyel2hh5hbjrqctcbv2oy6fjs66u26ywel323msitf4r5l2u2ui',
