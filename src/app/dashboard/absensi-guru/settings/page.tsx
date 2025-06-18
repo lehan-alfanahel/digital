@@ -189,7 +189,7 @@ export default function TeacherAttendanceSettings() {
         },
         body: JSON.stringify({
           chat_id: telegramSettings.chatId,
-          text: `🔔 Ini adalah pesan uji coba dari Aplikasi Absensi Guru Sekolah ID: ${schoolId}. Jika Anda menerima pesan ini, berarti konfigurasi bot telegram berhasil.`
+          text: `🔔 Ini adalah pesan uji coba dari Aplikasi Absensi Guru Sekolah dengan ID: ${schoolId}. Jika Anda menerima pesan ini, berarti konfigurasi bot telegram berhasil.`
         })
       });
       const data = await response.json();
