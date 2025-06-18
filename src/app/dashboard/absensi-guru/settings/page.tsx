@@ -41,7 +41,7 @@ export default function TeacherAttendanceSettings() {
     radius: 100
   });
   const [attendanceTimeSettings, setAttendanceTimeSettings] = useState<AttendanceTimeSettings>({
-   checkInStart: "06:00",
+    checkInStart: "06:00",
     checkInEnd: "08:00",
     checkOutStart: "15:00",
     checkOutEnd: "17:00"
@@ -73,8 +73,8 @@ export default function TeacherAttendanceSettings() {
           db
         } = await import('@/lib/firebase');
 
-        // Load location settings
-        const locationDoc = await getDoc(doc(db, "settings", "location"));
+        // Load location settings - separated by school ID
+        const locationDoc = await getDoc(doc(db, `schools/${schoolId}/settings`, "location"));
         if (locationDoc.exists()) {
           const data = locationDoc.data();
           setLocationSettings({
@@ -84,8 +84,8 @@ export default function TeacherAttendanceSettings() {
           });
         }
 
-        // Load attendance time settings
-        const timeDoc = await getDoc(doc(db, "settings", "attendanceTime"));
+        // Load attendance time settings - separated by school ID
+        const timeDoc = await getDoc(doc(db, `schools/${schoolId}/settings`, "attendanceTime"));
         if (timeDoc.exists()) {
           const data = timeDoc.data();
           setAttendanceTimeSettings({
@@ -96,8 +96,8 @@ export default function TeacherAttendanceSettings() {
           });
         }
 
-        // Load telegram settings
-        const telegramDoc = await getDoc(doc(db, "settings", "telegram"));
+        // Load telegram settings - separated by school ID
+        const telegramDoc = await getDoc(doc(db, `schools/${schoolId}/settings`, "telegram"));
         if (telegramDoc.exists()) {
           const data = telegramDoc.data();
           setTelegramSettings({
@@ -152,8 +152,13 @@ export default function TeacherAttendanceSettings() {
     }));
   };
 
-  // Get current location
+  // Get current location - optimized for Vercel build
   const getCurrentLocation = () => {
+    // Check if running in browser environment
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      toast.error("Fitur lokasi tidak tersedia di server");
+      return;
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         setLocationSettings(prev => ({
@@ -164,39 +169,84 @@ export default function TeacherAttendanceSettings() {
         toast.success("Lokasi saat ini berhasil didapatkan");
       }, error => {
         console.error("Error getting location:", error);
-        toast.error("Gagal mendapatkan lokasi. Pastikan GPS diaktifkan.");
+        let errorMessage = "Gagal mendapatkan lokasi. ";
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage += "Izin lokasi ditolak.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage += "Informasi lokasi tidak tersedia.";
+            break;
+          case error.TIMEOUT:
+            errorMessage += "Permintaan lokasi timeout.";
+            break;
+          default:
+            errorMessage += "Terjadi kesalahan yang tidak diketahui.";
+            break;
+        }
+        toast.error(errorMessage);
+      }, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
       });
     } else {
       toast.error("Geolocation tidak didukung oleh browser ini");
     }
   };
 
-  // Test telegram bot
+  // Test telegram bot - optimized for Vercel build
   const testTelegramBot = async () => {
     try {
-      if (!telegramSettings.chatId) {
+      if (!telegramSettings.chatId || !telegramSettings.chatId.trim()) {
         toast.error("ID Chat Telegram tidak boleh kosong");
         return;
       }
+      if (!telegramSettings.token || !telegramSettings.token.trim()) {
+        toast.error("Token Bot Telegram tidak boleh kosong");
+        return;
+      }
+
+      // Validate chat ID format (should be numeric or start with -)
+      const chatIdPattern = /^-?\d+$/;
+      if (!chatIdPattern.test(telegramSettings.chatId.trim())) {
+        toast.error("Format ID Chat Telegram tidak valid. Harus berupa angka.");
+        return;
+      }
+      const testMessage = `🔔 Ini adalah pesan uji coba dari Aplikasi Absensi Guru. ID Sekolah : ${schoolId}.\n\nJika Anda menerima pesan ini, berarti konfigurasi bot telegram berhasil untuk Sekolah Anda.`;
       const response = await fetch(`https://api.telegram.org/bot${telegramSettings.token}/sendMessage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          chat_id: telegramSettings.chatId,
-          text: "🔔 Ini adalah pesan uji coba dari Aplikasi Absensi Guru. Jika Anda menerima pesan ini, itu berarti konfigurasi bot telegram berhasil..."
+          chat_id: telegramSettings.chatId.trim(),
+          text: testMessage,
+          parse_mode: 'HTML'
         })
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       if (data.ok) {
-        toast.success("Test berhasil! Pesan terkirim ke Telegram.");
+        toast.success("Test Bot berhasil! Pesan terkirim ke Telegram.");
       } else {
-        toast.error(`Gagal mengirim pesan: ${data.description}`);
+        const errorMsg = data.description || "Gagal mengirim pesan";
+        toast.error(`Gagal mengirim pesan: ${errorMsg}`);
+        console.error("Telegram API error:", data);
       }
     } catch (error) {
       console.error("Error testing Telegram bot:", error);
-      toast.error("Gagal menghubungi API Telegram");
+      let errorMessage = "Gagal menghubungi API Telegram";
+      if (error instanceof Error) {
+        if (error.message.includes('fetch')) {
+          errorMessage = "Gagal terhubung ke server Telegram. Periksa koneksi internet.";
+        } else if (error.message.includes('HTTP error')) {
+          errorMessage = "Server Telegram menolak permintaan. Periksa token bot.";
+        }
+      }
+      toast.error(errorMessage);
     }
   };
 
@@ -217,22 +267,22 @@ export default function TeacherAttendanceSettings() {
         db
       } = await import('@/lib/firebase');
 
-      // Save location settings
-      await setDoc(doc(db, "settings", "location"), {
+      // Save location settings - separated by school ID
+      await setDoc(doc(db, `schools/${schoolId}/settings`, "location"), {
         ...locationSettings,
         schoolId,
         updatedAt: serverTimestamp()
       });
 
-      // Save time settings
-      await setDoc(doc(db, "settings", "attendanceTime"), {
+      // Save time settings - separated by school ID
+      await setDoc(doc(db, `schools/${schoolId}/settings`, "attendanceTime"), {
         ...attendanceTimeSettings,
         schoolId,
         updatedAt: serverTimestamp()
       });
 
-      // Save telegram settings
-      await setDoc(doc(db, "settings", "telegram"), {
+      // Save telegram settings - separated by school ID
+      await setDoc(doc(db, `schools/${schoolId}/settings`, "telegram"), {
         ...telegramSettings,
         schoolId,
         updatedAt: serverTimestamp()
@@ -249,121 +299,121 @@ export default function TeacherAttendanceSettings() {
       setSaving(false);
     }
   };
-  return <div className="pb-20 md:pb-6" data-unique-id="a862182a-922f-4562-9b4a-a04087849abb" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
-      <div className="flex items-center justify-between mb-4" data-unique-id="716cb1be-2c91-4c9b-8d6a-5079d4c76301" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-        <div className="flex items-center" data-unique-id="9f1cca0d-a417-4564-8f75-754cddfaf11b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-          <Link href="/dashboard/absensi-guru" className="p-2 mr-2 hover:bg-gray-100 rounded-full" data-unique-id="ef725917-ff17-43f2-b8ec-206d9019b8e7" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+  return <div className="pb-20 md:pb-6" data-unique-id="50f05aca-8000-4fe7-8492-877a0c792fb1" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+      <div className="flex items-center justify-between mb-6" data-unique-id="150a786a-b54f-45df-b6e2-824d879d07f3" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+        <div className="flex items-center" data-unique-id="14ae8669-4061-435d-8afe-45759d3cee2c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+          <Link href="/dashboard/absensi-guru" className="p-2 mr-2 hover:bg-gray-100 rounded-full" data-unique-id="5e8dd125-32b7-483c-98b3-216e7715cdd0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
             <ArrowLeft size={20} />
           </Link>
-          <h1 className="text-2xl font-bold text-gray-800" data-unique-id="7c284638-2c53-4b7a-b2be-175f63875e0c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="065eb292-0ae6-4f9a-84e4-b929ae663558" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Pengaturan Absensi Guru</span></h1>
+          <h1 className="text-2xl font-bold text-gray-800" data-unique-id="53b85f80-1775-4676-bde1-17ea5c0cbf37" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="f88ce9e8-7225-43f5-a0da-1a819de08897" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Pengaturan Absensi Guru</span></h1>
         </div>
       </div>
       
-      {loading ? <div className="flex justify-center items-center h-64" data-unique-id="06f2b7d3-204f-431d-a75f-e404df4894f2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+      {loading ? <div className="flex justify-center items-center h-64" data-unique-id="f086c6b7-407a-44f7-8cbe-1066c9483b70" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
           <Loader2 className="h-12 w-12 text-primary animate-spin" />
-        </div> : <div className="bg-white rounded-xl shadow-sm overflow-hidden" data-unique-id="bd03df40-1671-4f88-b37c-31e71c166a6a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+        </div> : <div className="bg-white rounded-xl shadow-sm overflow-hidden" data-unique-id="13717399-dc60-416f-bfeb-cf24f38501db" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
           {/* Tabs */}
-          <div className="border-b border-gray-200" data-unique-id="ef771ab8-25e9-492f-91c5-a59c18c4375f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-            <div className="flex" data-unique-id="0e27097f-1435-4903-9c61-484d3e731d8b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-              <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'location' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('location')} data-unique-id="bf424966-dc97-43d3-82e1-1755e806723a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                <MapPin size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="dfece747-3d4d-4218-8e8e-be67c9aa9247" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+          <div className="border-b border-gray-200" data-unique-id="7a01d378-3848-4861-ba11-6a5951079365" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+            <div className="flex" data-unique-id="b99352fd-514e-44c3-9733-7ac83a8c0364" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+              <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'location' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('location')} data-unique-id="97d8faa9-d01f-45b8-b516-b8d43a02c880" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                <MapPin size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="6ba51494-b6d5-4585-a10a-5eea64f7b9ce" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                 Lokasi
               </span></button>
-              <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'time' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('time')} data-unique-id="dd0b038a-54d3-4db9-baf8-36f2b67d7e31" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                <Clock size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="9a4e1cff-c3d3-4654-909b-f8c2c31e19ab" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                Jam
+              <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'time' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('time')} data-unique-id="76176624-57c6-49c6-b538-4e90807a3300" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                <Clock size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="91b2f270-802d-492c-83ec-214139596f21" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                Jam Kerja
               </span></button>
-              <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'telegram' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('telegram')} data-unique-id="71bb5a8e-5bf5-46ed-94b1-d09c81b39f06" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                <MessageSquare size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="9c72a272-f67e-47a4-9fc2-65cad561672c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+              <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'telegram' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('telegram')} data-unique-id="07e29241-aa0f-4ec0-80f9-bc750309f15f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                <MessageSquare size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="00a4a8cd-51c9-4f6f-b03f-16f14b43a1be" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                 Telegram
               </span></button>
             </div>
           </div>
           
           {/* Tab Content */}
-          <div className="p-4" data-unique-id="9b5dbb82-31d1-4ca7-8b9e-f31329e072c4" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+          <div className="p-6" data-unique-id="80dd7af9-92d4-4f70-b697-28e36990bc15" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
             {/* Location Settings */}
-            {activeTab === 'location' && <div data-unique-id="99f217ce-4fba-4b1a-b844-a23335ec704b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
-                <h2 className="text-lg font-semibold mb-6" data-unique-id="9b63db92-73c2-4956-8c5f-dad2c237ebef" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="d1a98272-b17e-4eec-a3ef-d708b40b6cc0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Pengaturan Lokasi Sekolah</span></h2>
+            {activeTab === 'location' && <div data-unique-id="ee78d3e1-a246-4072-a265-5e06f60d4c3b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+                <h2 className="text-lg font-semibold mb-6" data-unique-id="f034534c-7a60-43dd-b968-0b2cb5062905" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="762ff5e0-a6aa-45df-b2a3-6ec7e97842bc" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Pengaturan Lokasi Sekolah</span></h2>
                 
-                <div className="mb-2" data-unique-id="0e0a9a34-79cb-4b53-925d-faf88f6dffee" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                  <p className="text-gray-600 mb-4" data-unique-id="7ee5ce92-9194-4cdc-92ef-64d9f2443096" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="1bdc8975-ca6e-4e11-92df-1132085ef266" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                <div className="mb-6" data-unique-id="da2e9a9d-d209-4d92-8018-3182234df6d2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <p className="text-gray-600 mb-4" data-unique-id="966c5bd4-47cc-484b-a897-e33f8ecee6a8" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="4dfbc37c-358d-47a6-8d94-049e1daec018" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                     Tentukan lokasi sekolah dan radius (dalam meter) di mana absensi diizinkan.
-                    Guru hanya dapat melakukan absensi jika berada dalam radius yang ditentukan.
+                    Tenaga kependidikan hanya dapat melakukan absensi jika berada dalam radius yang ditentukan.
                   </span></p>
-                  <button onClick={getCurrentLocation} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mb-6" data-unique-id="4a1233ab-d185-45ba-9aea-aae569bc35a7" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <MapPin size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="320119de-1413-439d-ba54-a66e263fc713" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <button onClick={getCurrentLocation} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mb-6" data-unique-id="31315f5b-f1d8-425b-9c14-a0a23419a9f8" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <MapPin size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="ef36fcda-6fe5-41dc-8d6c-cb556c9f9314" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                     Dapatkan Lokasi Saat Ini
                   </span></button>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" data-unique-id="9c3557e2-ec8d-40e2-ab50-04dd388c2dd4" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" data-unique-id="1b36aa6f-90f3-4483-91ca-60b1ee2874eb" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
                   {/* Latitude */}
-                  <div data-unique-id="b03e9b5a-88fd-4181-bb03-544e7479cd2e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="10c16466-3798-4168-92ab-7aa92065b779" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="c5eb50c3-370c-4361-bb54-d1222a82dfed" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <div data-unique-id="207bd09e-5a6f-4d34-bd06-065442c8deb6" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="2d07d887-5c01-44ee-9601-51b9f508f797" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="fb3a2375-d4b3-4a32-981f-c5adab97cc08" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                       Garis Lintang (Latitude)
                     </span></label>
-                    <input type="number" step="0.000001" id="latitude" name="latitude" value={locationSettings.latitude} onChange={handleLocationChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="ae7e4fa7-4026-4739-ad27-b4cbfbe8ba62" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                    <input type="number" step="0.000001" id="latitude" name="latitude" value={locationSettings.latitude} onChange={handleLocationChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="fc96d277-a80f-4921-96d8-aa0d72908445" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                   </div>
                   
                   {/* Longitude */}
-                  <div data-unique-id="4c454ee4-8e78-4662-8c49-009655555206" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="24ed2319-d795-40eb-95d5-d56123bd24ba" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="614d2002-91d7-4170-873a-069230f5d7dd" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <div data-unique-id="902c34b2-4c9f-473c-8419-b4aae2503ea6" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="f0339bd1-29d2-4b82-ab2b-a9d4fb852def" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="ee57a37d-4cf4-4a35-a411-7b1d81403ccc" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                       Garis Bujur (Longitude)
                     </span></label>
-                    <input type="number" step="0.000001" id="longitude" name="longitude" value={locationSettings.longitude} onChange={handleLocationChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="f7f1f8fc-d752-469f-9d32-cf9efb341fe0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                    <input type="number" step="0.000001" id="longitude" name="longitude" value={locationSettings.longitude} onChange={handleLocationChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required data-unique-id="9ed41b0a-91f2-410b-91e9-0a266656b134" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                   </div>
                 </div>
                 
                 {/* Radius */}
-                <div className="mb-6" data-unique-id="4f6922d6-ccf8-4062-ae4a-32bd438e0649" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                  <label htmlFor="radius" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="d53e3d98-122d-486c-bf0b-59d365f579a2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="86b4645e-297d-4f17-8b64-af71f3cc220c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    Radius Absensi (Dalam Meter)
+                <div className="mb-6" data-unique-id="9dea0804-67cc-432e-873c-381dbb9a6130" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <label htmlFor="radius" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="69a33d17-0e2c-4a99-b2ef-e061ca7a3248" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="f85ec9f7-02fe-46d9-9608-faa9903aea2f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    Radius Absensi (dalam meter)
                   </span></label>
-                  <input type="range" id="radius" name="radius" min="50" max="500" step="10" value={locationSettings.radius} onChange={handleLocationChange} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" data-unique-id="d3c267b1-7590-43d0-b43f-4eb68cba3d4f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
-                  <div className="flex justify-between mt-2" data-unique-id="14633b9e-1115-4db4-bd7e-166d1de9498d" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <span className="text-xs text-gray-500" data-unique-id="a9c6caf3-fa3e-4054-b7b4-178def3f5f0e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="22f366ea-4d70-4cec-998a-cd444844986f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">50m</span></span>
-                    <span className="text-sm font-medium" data-unique-id="0f6fa741-b37e-42d2-876d-32efc2b91a22" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">{locationSettings.radius}<span className="editable-text" data-unique-id="2c1c180f-4e55-47eb-8525-4cd4b0e88002" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">m</span></span>
-                    <span className="text-xs text-gray-500" data-unique-id="7caaf3b4-cc33-4654-8e2d-8136ea01c83f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="d31c5756-007c-48ff-acf2-144dd66eb15a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">500m</span></span>
+                  <input type="range" id="radius" name="radius" min="50" max="500" step="10" value={locationSettings.radius} onChange={handleLocationChange} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" data-unique-id="8bab8e24-a94b-4b09-882e-c6349b537e9b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                  <div className="flex justify-between mt-2" data-unique-id="4cbff5c7-1101-4106-9488-9047cdd8077b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <span className="text-xs text-gray-500" data-unique-id="fe21f39e-1fdb-4648-a2f8-a092dfefb8ea" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="4ce86f26-63ee-4d0b-9850-13f0173c4895" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">50m</span></span>
+                    <span className="text-sm font-medium" data-unique-id="e32b8bbf-3206-4340-93ef-03b828dbaf17" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">{locationSettings.radius}<span className="editable-text" data-unique-id="7fe55186-94b6-4d1f-98ef-22ede807ff2d" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">m</span></span>
+                    <span className="text-xs text-gray-500" data-unique-id="3862e053-3a39-40a4-9e97-faa014c896d1" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="b55b3482-bed9-4e09-ba16-4c69162091e6" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">500m</span></span>
                   </div>
                 </div>
                 
-                <div data-unique-id="3c288c76-d41e-4642-8a08-17d1c69a15bc" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                  <h3 className="text-md font-semibold mb-1" data-unique-id="0dd17e94-6aef-4318-83c6-cba82b03e0e1" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="3e5bce27-a869-4542-8149-70f7a448293b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Lokasi yang akan diterapkan:</span></h3>
-                  <p className="text-gray-600 text-sm" data-unique-id="c58a1089-8e11-465e-8d3f-ff47f744da81" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+                <div data-unique-id="e06baa25-8d09-4b05-a179-1852dcb976d9" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <h3 className="text-md font-semibold mb-1" data-unique-id="a4ffd22e-bd81-4441-99d6-71f025e4fb18" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="de0c2cac-507b-4704-af74-666bcf1dbb7c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Lokasi yang akan diterapkan:</span></h3>
+                  <p className="text-gray-600" data-unique-id="1a18383f-5f4c-4bc8-b8ec-52bbb919c174" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
                     {locationSettings.latitude === 0 && locationSettings.longitude === 0 ? "Lokasi belum diatur" : `${locationSettings.latitude}, ${locationSettings.longitude} (Radius: ${locationSettings.radius}m)`}
                   </p>
                 </div>
               </div>}
             
             {/* Time Settings */}
-            {activeTab === 'time' && <div data-unique-id="5d4a509f-d2d3-433f-a773-ac93b55f9ce5" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                <h2 className="text-lg font-semibold mb-4" data-unique-id="ad49804b-5394-4e63-b567-71b315165aac" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="f974af7e-ecb1-4f32-8189-09eea0a0e77e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Pengaturan Jam Kerja</span></h2>
+            {activeTab === 'time' && <div data-unique-id="43099d73-d2f2-4274-9e8e-2903b3961261" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                <h2 className="text-lg font-semibold mb-6" data-unique-id="1296696f-a51f-4038-91aa-98769c9f6748" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="35dbdb45-31de-48cc-8236-3c06003c5780" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Pengaturan Jam Kerja</span></h2>
                 
-                <div className="mb-4" data-unique-id="2925b35b-07c1-4632-85ef-6981a1ae1298" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                  <p className="text-gray-600 mb-4" data-unique-id="1c7c79df-c844-4175-9559-6a9d231b4ad3" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="1233e92b-c37a-4e56-8356-5f02de175aa5" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    Atur jam absensi masuk dan pulang. Guru hanya dapat
+                <div className="mb-6" data-unique-id="575aebc8-6a0c-4d81-aa48-ea9150087ca0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <p className="text-gray-600 mb-4" data-unique-id="55e1de22-faaf-4d2e-b4d5-c3b137ebb360" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="a0a68120-480b-48bc-bcf3-fc2b5f435f44" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    Atur jam absensi masuk dan pulang. Guru dan tenaga kependidikan hanya dapat
                     melakukan absensi dalam rentang waktu yang ditentukan.
                   </span></p>
                 </div>
                 
-                <div className="grid grid-cols-1 gap-6" data-unique-id="fa487a2b-c55c-4f2f-b209-a535ea735d00" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+                <div className="grid grid-cols-1 gap-6" data-unique-id="cb6dae25-dba7-49e4-a300-3bc2e35aadb3" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
                   {/* Check-in time */}
-                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200" data-unique-id="4c007da2-836c-410a-852d-35840dd83e69" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <h3 className="text-md font-semibold mb-2" data-unique-id="3dcfda69-5c96-45b1-b320-e4578f6f38b4" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="f191dadb-7d20-4fb7-8645-506a3228058a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Jam Absensi Masuk</span></h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-unique-id="e43d167e-a7c8-422b-b6d5-b2fe2546f67c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                      <div data-unique-id="72e4a76b-35c1-4352-ba28-13bd672b0909" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        <label htmlFor="checkInStart" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="b36d5833-eb6b-4de1-ac4c-e725b58caf95" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="8fa91982-5c05-44ac-a83a-c9133a253392" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200" data-unique-id="31f90d05-4941-4e59-b0d8-8ce622c2f3d9" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <h3 className="text-md font-semibold mb-2" data-unique-id="481e40bf-17a1-4581-b426-43eb93399548" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="a9b059e1-49c1-4124-85b6-7b469c690399" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Jam Absensi Masuk</span></h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-unique-id="60072196-f24e-4f1f-aab6-64715b33a61b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <div data-unique-id="33e9265c-2630-48ed-9b48-17f2b08d58ec" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        <label htmlFor="checkInStart" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="19b9fe75-34ea-451d-a390-030db61f6465" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="4fa91741-0ec8-4d8e-9244-a982b8fa11c4" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                           Waktu Mulai
                         </span></label>
-                        <input type="time" id="checkInStart" name="checkInStart" disabled value={attendanceTimeSettings.checkInStart} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="de5ceb4a-2270-48c7-a0fc-03ad8c6939de" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                        <input type="time" id="checkInStart" name="checkInStart" disabled value={attendanceTimeSettings.checkInStart} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="fdc4a0f8-d1e7-4747-852b-17692e8a0723" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                       </div>
-                      <div data-unique-id="5d9ad993-42df-4ad4-9a41-c3546dcd0065" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        <label htmlFor="checkInEnd" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="b97da800-ce05-4230-b8d9-b6bb9c0502cd" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="02537f32-58e6-482b-aa02-4023c5a1ad7b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <div data-unique-id="26d0c9d9-fb20-4456-bea7-032c2f46b839" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        <label htmlFor="checkInEnd" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="4566af2d-96fe-432e-a73c-bba42f78815b" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="bb9d6d96-1ef4-4c1e-9321-455093394a5a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                           Batas Waktu
                         </span></label>
-                        <input type="time" id="checkInEnd" name="checkInEnd" disabled value={attendanceTimeSettings.checkInEnd} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="3003eeb7-9a22-4830-a5cf-00e3c0c022f0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
-                        <p className="text-xs text-gray-500 mt-1" data-unique-id="6960cb8c-002a-49e7-a42e-639b2eed483e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="98681867-31e3-4f3a-9059-bea14e5cc5eb" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        <input type="time" id="checkInEnd" name="checkInEnd" disabled value={attendanceTimeSettings.checkInEnd} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="1be608dc-84b8-4a6a-aea7-28433b18685c" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                        <p className="text-xs text-gray-500 mt-1" data-unique-id="d4e66c31-8312-482b-98b0-dbd6a59b3150" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="c9691e9f-4996-4afa-bdea-af1627b130f6" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                           * Absensi setelah waktu ini akan dianggap terlambat
                         </span></p>
                       </div>
@@ -371,20 +421,20 @@ export default function TeacherAttendanceSettings() {
                   </div>
                   
                   {/* Check-out time */}
-                  <div className="bg-green-50 p-4 rounded-lg border border-green-200" data-unique-id="9e32dbbe-df68-4314-a92e-7e039f146382" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <h3 className="text-md font-semibold mb-2" data-unique-id="0fd9767f-8adc-4305-b25f-891f6b459cb2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="c6bd630f-654d-43fd-8cc5-b137415d5472" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Jam Absensi Pulang</span></h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-unique-id="1643380d-fdc1-4edf-84aa-5f94dfa75bce" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                      <div data-unique-id="02815b76-82b5-4237-bf21-de210070f6fa" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        <label htmlFor="checkOutStart" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="61f1aef8-5f26-4881-9e18-b2af3e1d360e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="0ad69c8e-a3ad-412d-8310-6fcc1393d744" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200" data-unique-id="2e7de559-ad44-46d2-9ee2-211389fc05ca" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <h3 className="text-md font-semibold mb-2" data-unique-id="40a31d06-4b0e-46e2-8a97-ec79009648f7" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="1a81781e-a0fa-4bec-894f-692395fdc0a3" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">Jam Absensi Pulang</span></h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-unique-id="a869dd69-1901-4341-89b4-23b434f335b2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <div data-unique-id="a518d88c-8fd0-42a5-bd5b-e83cbf4db9a5" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        <label htmlFor="checkOutStart" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="9291c5cb-0ec5-4d92-a88b-4181a73e1de2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="cdf43c24-d274-4a8b-96ce-b2d90738ff41" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                           Waktu Mulai
                         </span></label>
-                        <input type="time" id="checkOutStart" name="checkOutStart" disabled value={attendanceTimeSettings.checkOutStart} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="8367a040-85ec-4530-be2c-263b7c5d383a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                        <input type="time" id="checkOutStart" name="checkOutStart" disabled value={attendanceTimeSettings.checkOutStart} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="9fd23055-c8c7-4cde-8fbe-cc315d55d6d7" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                       </div>
-                      <div data-unique-id="cc2f1b2b-f022-49b6-b555-dc4c24204ac4" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        <label htmlFor="checkOutEnd" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="a03a4478-816c-4c41-adfe-24c47da1dd21" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="7c2570d5-b799-40c9-8888-9393de1b3058" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <div data-unique-id="72055479-4151-40cf-bf46-e3336ec4dc10" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        <label htmlFor="checkOutEnd" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="cf064746-8f58-4dd3-8fe6-b7da9c425048" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="9e8dcbe0-0e01-4ef6-aee7-e849dc2e3a0a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                           Batas Waktu
                         </span></label>
-                        <input type="time" id="checkOutEnd" name="checkOutEnd" disabled value={attendanceTimeSettings.checkOutEnd} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="cc4ca97b-8a6d-4bb2-8d98-b9a1df6b4545" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                        <input type="time" id="checkOutEnd" name="checkOutEnd" disabled value={attendanceTimeSettings.checkOutEnd} onChange={handleTimeChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="e6678fa8-912a-46cc-a4ee-45414dcc2493" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                       </div>
                     </div>
                   </div>
@@ -415,40 +465,40 @@ export default function TeacherAttendanceSettings() {
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 gap-4 mb-6" data-unique-id="9c5900b0-da84-4caf-bfe6-4b3392813b54" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+                  <div className="grid grid-cols-1 gap-4 mb-6" data-unique-id="b112a79b-c4c4-48d5-9e9a-bcbd61debfeb" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
                     {/* Bot Token */}
-                    {/*<div data-unique-id="9dcb48e4-7aa9-46ae-b353-5ff500545138" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                      <label htmlFor="token" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="1b913997-4d01-4e7f-bfef-3ff9b3b0566d" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="be6c6365-ea42-4802-b706-890a5c2960a1" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    {/*<div data-unique-id="e18b1369-234a-49cd-ace9-0f064b40c4de" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <label htmlFor="token" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="17ecc0ad-51f2-4198-904c-65b060e1b847" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="a2d0beb2-9a4a-4b14-ad4f-22691af85af5" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                         Token Bot
                       </span></label>
-                      <input type="text" id="token" name="token" disabled value={telegramSettings.token} onChange={handleTelegramChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="14078faa-936e-4889-a53f-93d97072782a" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
-                      <p className="text-xs text-gray-500 mt-1" data-unique-id="09ed8827-f85c-48e8-a72d-21d48f281790" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="f56c291b-1b8f-4717-b558-d9847415cb15" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        Token default: </span><code data-unique-id="c2a921cc-7436-499d-8c78-36ad5d7b1bc0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="67163368-fa7a-48ae-beb9-65aee51d638e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">7702797779:AAELhARB3HkvB9hh5e5D64DCC4faDfcW9IM</span></code>
+                      <input type="text" id="token" name="token" value={telegramSettings.token} onChange={handleTelegramChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="00f99ab3-d2d3-4688-951f-b7765c29d754" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                      <p className="text-xs text-gray-500 mt-1" data-unique-id="41d41a39-3f19-4cee-afb7-36493afba541" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="b2d71279-3714-4616-abcb-a913901541e8" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        Token default: </span><code data-unique-id="168e9323-f3b9-4f18-b3df-9ac22bc6cff7" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="00e4a414-bd17-4a1f-97d4-baad0c43c4a0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">7702797779:AAELhARB3HkvB9hh5e5D64DCC4faDfcW9IM</span></code>
                       </p>
                     </div>*/}
                     
                     {/* Chat ID */}
-                    <div data-unique-id="a4670cde-f7b7-40f6-bf42-036162326337" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                      <label htmlFor="chatId" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="cd1377d2-ef79-49b7-be34-e1143b778a88" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="b1662f0e-aa2d-44f6-812b-034dca7065d0" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        ID Chat Telegram
+                    <div data-unique-id="fc60cf19-da7d-4d17-a3de-6a3cc43793b6" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <label htmlFor="chatId" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="38325a81-c3c3-45ea-9c38-14d469f08392" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="6da0f8b3-526d-4adc-ac10-6801d50f3404" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        ID Chat Grup Telegram
                       </span></label>
-                      <input type="text" id="chatId" name="chatId" value={telegramSettings.chatId} onChange={handleTelegramChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" placeholder="Contoh: 123456789" required data-unique-id="78531995-33df-40d5-898b-a358a05ad4e8" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                      <input type="text" id="chatId" name="chatId" value={telegramSettings.chatId} onChange={handleTelegramChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" placeholder="Contoh : -123456789" required data-unique-id="927a76e6-9337-42be-954a-3e7b59e5e7a5" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                     </div>
                     
                     {/* Bot Username */}
-                    <div data-unique-id="a554b2f7-8447-418f-9623-a2fa081f1461" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                      <label htmlFor="botUsername" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="9333a099-9d34-43de-a52f-f381524c6106" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="ce669609-dee3-42db-8362-1041ee27d900" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <div data-unique-id="ecb400d0-b81d-45e0-8fee-a7dbf4d68aec" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                      <label htmlFor="botUsername" className="block text-sm font-medium text-gray-700 mb-1" data-unique-id="03bc0345-cf47-4e0a-9c32-29db60fdf0b2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="d45ecdf5-07b7-4fcc-938d-db44c44fa207" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                         Username Bot
                       </span></label>
-                      <div className="relative" data-unique-id="fba0a09f-7ef4-4fb2-adf8-9f390e7aaca1" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500" data-unique-id="54653a66-4b5c-466a-8511-6ca2ed96db49" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="981d2f59-4377-4475-a54d-402079728dc3" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">@</span></span>
-                        <input type="text" id="botUsername" name="botUsername" disabled value={telegramSettings.botUsername} onChange={handleTelegramChange} className="w-full pl-8 px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="613b45d6-8e13-4944-9ea3-36eb34274b2e" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
+                      <div className="relative" data-unique-id="7080039a-89fd-4733-af65-75776d12bd40" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500" data-unique-id="fb7ee14f-309b-4088-a2ba-c4664b2a6394" data-file-name="app/dashboard/absensi-guru/settings/page.tsx"><span className="editable-text" data-unique-id="cd84dedf-8398-4236-a89d-e33372158549" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">@</span></span>
+                        <input type="text" id="botUsername" name="botUsername" disabled value={telegramSettings.botUsername} onChange={handleTelegramChange} className="w-full pl-8 px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" data-unique-id="5ee72dec-6b65-49b3-bc3d-2d4a63469594" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" />
                       </div>
                     </div>
                   </div>
                   
-                  <button type="button" onClick={testTelegramBot} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-900 active:bg-orange-800 transition-colors" data-unique-id="044bc501-dee1-4d6a-a191-66cbad115cd8" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                    <MessageSquare size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="f5bc4bd7-0ba6-496f-8c41-e0cebbdef172" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                  <button type="button" onClick={testTelegramBot} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-900 active:bg-orange-800 transition-colors" data-unique-id="437bb943-17b6-41da-887d-7f7d5963c091" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+                    <MessageSquare size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="d8134575-b11c-4571-b5cd-336a79a3e19f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                     Kirim Pesan Test ke Telegram
                   </span></button>
                 </div>
@@ -456,15 +506,14 @@ export default function TeacherAttendanceSettings() {
           </div>
           
           {/* Action buttons */}
-          <div className="px-6 py-4 bg-gray-50 flex justify-end" data-unique-id="dc0dc60d-fc65-4c96-a676-32d1e2a297f2" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
+          <div className="px-6 py-4 bg-gray-50 flex justify-end" data-unique-id="83d128bc-1b27-45cf-81c7-6cd934a4753f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
             <motion.button onClick={saveSettings} disabled={saving || saveSuccess} className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-white transition-colors ${saving || saveSuccess ? 'bg-green-600' : 'bg-primary hover:bg-orange-500 active:bg-orange-600'}`} whileTap={{
           scale: 0.95
-        }} data-unique-id="e4e1b74a-17de-46e7-8d93-ccd2869180e7" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
+        }} data-unique-id="c7b2d81d-704f-4a8f-ae39-4157be938e83" data-file-name="app/dashboard/absensi-guru/settings/page.tsx" data-dynamic-text="true">
               {saving ? <Loader2 className="h-5 w-5 animate-spin" /> : saveSuccess ? <CheckCircle className="h-5 w-5" /> : <Save className="h-5 w-5" />}
               {saving ? "Menyimpan..." : saveSuccess ? "Tersimpan" : "Simpan Pengaturan"}
             </motion.button>
           </div>
         </div>}
-    <hr className="border-t border-none mb-5" />
     </div>;
 }
