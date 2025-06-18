@@ -321,7 +321,7 @@ export default function TeacherAttendanceSettings() {
               </span></button>
               <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'time' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('time')} data-unique-id="76176624-57c6-49c6-b538-4e90807a3300" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                 <Clock size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="91b2f270-802d-492c-83ec-214139596f21" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
-                Jam Kerja
+                Jam
               </span></button>
               <button className={`py-4 px-6 font-medium text-sm border-b-2 ${activeTab === 'telegram' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`} onClick={() => setActiveTab('telegram')} data-unique-id="07e29241-aa0f-4ec0-80f9-bc750309f15f" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
                 <MessageSquare size={16} className="inline-block mr-2" /><span className="editable-text" data-unique-id="00a4a8cd-51c9-4f6f-b03f-16f14b43a1be" data-file-name="app/dashboard/absensi-guru/settings/page.tsx">
