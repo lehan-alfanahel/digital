@@ -706,7 +706,7 @@ const sendTelegramNotification = async (
     }
     // Add reason if it's an izin or alpha type
     if ((attendanceType === 'izin' || attendanceType === 'alpha') && reason) {
-      message += `\nAlasan ${messageType} : "${reason}".`;
+      message += `\nAlasan ${messageType} : "${reason}"`;
     }
     // Send notification
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
