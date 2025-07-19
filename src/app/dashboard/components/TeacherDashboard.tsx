@@ -247,7 +247,7 @@ export default function TeacherDashboard({
            </div>
            <p className="text-lg font-bold text-white">{schoolName}</p>
            <div className="flex items-center mt-2 text-xs text-white">
-             <span>Tahun Pelajaran 2024/2025</span>
+             <span>Tahun Ajaran 2025/2026</span>
              <span className="mx-2">•</span>
              <span className="flex items-center">
                <span className="mr-1 h-2 w-2 bg-green-300 rounded-full inline-block animate-pulse"></span>
